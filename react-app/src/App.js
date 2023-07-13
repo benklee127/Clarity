@@ -5,6 +5,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Home from "./components/Home";
 import Channel from "./components/Channel";
 import Sidebar from "./components/Sidebar";
 
@@ -21,8 +22,7 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route path="/">
-            <Sidebar />
-            <Channel />
+            <Home />
           </Route>
           <Route path="/login">
             <LoginFormPage />

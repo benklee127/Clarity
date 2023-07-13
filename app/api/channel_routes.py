@@ -6,9 +6,16 @@ from datetime import date
 
 channel_routes = Blueprint('channels', __name__)
 
+
 #print list of channels
 @channel_routes.route('/')
 def get_channels():
+    channels = Channel.query.filter(Channel.type == 'gc').all()
+    return {'channels' : [channel.to_dict() for channel in channels]}
+
+#print list of channels
+@channel_routes.route('/all')
+def get_all_channels():
     channels = Channel.query.all()
     return {'channels' : [channel.to_dict() for channel in channels]}
 
@@ -19,10 +26,10 @@ def get_channel_id(channel_id):
     return channel.to_dict()
 
 #get channel messages
-@channel_routes.route('/posts/<int:channel_id>')
+@channel_routes.route('/messages/<int:channel_id>')
 def get_channel_posts(channel_id):
-    channel_messages = Message.query.filter(Message.channel_id == channel_id)
-    return {'posts' : {message.to_dict() for message in channel_messages}}
+    channel_messages = Message.query.filter(Message.channel_id == channel_id).all()
+    return {'messages' : [message.to_dict() for message in channel_messages]}
 
 
 @channel_routes.route('/key/<string:key>')

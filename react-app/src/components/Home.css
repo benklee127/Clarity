@@ -1,0 +1,65 @@
+/* overall layout */
+.home-wrapper {
+    display: flex;
+    flex-wrap: row;
+    flex-wrap:wrap;
+}
+
+.navbar-wrapper {
+    width: 100vw;
+    height: 10vh;
+    background-color: maroon;
+}
+
+
+.main-wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+}
+
+.sidebar-wrapper {
+    width: 20vw;
+    height: 90vh;
+    background-color: lightcoral
+}
+
+
+.channel-wrapper {
+    width: 80vw;
+    height: 90vh;
+    background-color: lightgray;
+}
+
+/* Sidebarlayout */
+.sidebar-channel-section {
+    min-height: 200px;
+    border: dashed white;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-chat-section {
+    min-height: 200px;
+    border: dashed white;
+}
+
+/* sidebar css */
+
+
+/* Channel layout */
+
+.channel-header {
+    height: 100px;
+    border: dashed white;
+}
+
+.channel-gallery {
+    height: 60vh;
+    border: dashed white;
+}
+
+.channel-message {
+    height: 250px;
+    border: dashed white;
+}

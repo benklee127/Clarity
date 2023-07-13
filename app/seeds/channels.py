@@ -6,8 +6,8 @@ from datetime import date
 def seed_channels():
     channel1 = Channel(type='dm', key="1_2")
     channel2 = Channel(type='dm', key="2_3")
-    channel3 = Channel(type='ch', title="GroupChannel1",description="groupchannel1 desc", user_id=1)
-    channel4 = Channel(type='ch', title="GroupChannel2",description="groupchannel2 desc", user_id=1)
+    channel3 = Channel(type='gc', title="GroupChannel1",description="groupchannel1 desc", user_id=1)
+    channel4 = Channel(type='gc', title="GroupChannel2",description="groupchannel2 desc", user_id=1)
 
     db.session.add(channel1)
     db.session.add(channel2)
@@ -24,8 +24,8 @@ def seed_channels():
 # it will reset the primary keys for you as well.
 def undo_channels():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.channels RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM users"))
+        db.session.execute(text("DELETE FROM channels"))
 
     db.session.commit()

@@ -23,3 +23,7 @@ def get_channel_messages(channel_id):
 # @message_routes.route('/to_channel/<int:channel_id>',methods=["POST"])
 # def send_channel_message(channel_id):
 #     form = MessageForm()
+
+# @message_routes.route('/to_channel/<int:channel_id>',methods=["POST"])
+# def send_channel_message(channel_id):
+#     form = MessageForm()

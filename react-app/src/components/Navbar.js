@@ -1,4 +1,9 @@
 export default function Navbar() {
   console.log("herehere");
-  return <div>Navbar Component</div>;
+  return (
+      <div className="navbar-wrapper">
+        Navbar Component
+        <div>placeholder</div>
+      </div>
+  );
 }

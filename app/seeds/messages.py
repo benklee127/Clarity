@@ -14,11 +14,14 @@ def seed_messages():
         content='Hi this is message4 from bobbie to a group channel', user_id=1, channel_id=3, created_at=date.today())
     message5 = Message(
         content='Hi this is message5 from demo to a second group channel', user_id=3, channel_id=4, created_at=date.today())
+    message6 = Message(
+        content='message 6', user_id=2, channel_id=3, created_at=date.today())
     db.session.add(message1)
     db.session.add(message2)
     db.session.add(message3)
     db.session.add(message4)
     db.session.add(message5)
+    db.session.add(message6)
     db.session.commit()
     # pass
 
@@ -31,8 +34,8 @@ def seed_messages():
 # it will reset the primary keys for you as well.
 def undo_messages():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.messages RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM users"))
+        db.session.execute(text("DELETE FROM messages"))
 
     db.session.commit()
