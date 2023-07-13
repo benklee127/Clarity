@@ -20,6 +20,7 @@ def seed_messages():
     db.session.add(message4)
     db.session.add(message5)
     db.session.commit()
+    # pass
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
