@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./Home.css";
 import { useEffect, useState } from "react";
+import { postMessageThunk } from "../store/channel";
 
 export default function MessageForm() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -18,6 +19,7 @@ export default function MessageForm() {
       channel_id: currChannel.id,
     };
     console.log("new message", newMessage);
+    dispatch(postMessageThunk(newMessage));
   };
 
   return (
@@ -28,8 +30,10 @@ export default function MessageForm() {
           type="textarea"
           value={content}
           maxLength={500}
-          onChange={(e) => setMessageContent(e.target.value)}
-        ></textarea>
+          onChange={(e) => setContent(e.target.value)}
+        >
+          text
+        </textarea>
         <button type="submit" className="message-submit">
           Submit
         </button>

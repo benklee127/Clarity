@@ -46,11 +46,11 @@ def get_user_channels(user_id):
     pass
 
 #post to a channel
-@channel_routes.route('/post/<int:channel_id>')
+@channel_routes.route('/post/<int:channel_id>', methods=["POST"])
 def post_message(channel_id):
     form = MessageForm()
     print('form data', form.data)
-    form['csrf_token'].datat = request.cookies['csrf_token']
+    form['csrf_token'].data = request.cookies['csrf_token']
     new_post = Message(content=form.data['content'], user_id=current_user.id, created_at=date.today(), channel_id=channel_id)
     db.session.add(new_post)
     db.session.commit()
@@ -69,7 +69,7 @@ def join_channel(channel_id):
 def create_channel():
     form = ChannelForm()
     print('form data', form.data)
-    form['csrf_token'].datat = request.cookies['csrf_token']
+    form['csrf_token'].data = request.cookies['csrf_token']
     new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], type='gc')
     db.session.add(new_channel)
     db.session.commit()

@@ -7,6 +7,7 @@ const CREATE_CHANNEL = "/channels/CREATE_CHANNEL";
 const POST_CHANNEL = "/channels/POST_CHANNEL";
 const JOIN_CHANNEL = "/channels/JOIN_CHANNEL";
 const LOAD_CHANNEL = "/channels/LOAD_CHANNEL";
+const POST_MESSAGE = "/channels/POST_MESSAGE";
 
 const getAllChannelsAction = (channels) => ({
   type: GET_ALL_CHANNELS,
@@ -36,6 +37,11 @@ const getChannelMessagesAction = (messages) => ({
 const createChannelAction = (channel) => ({
   type: CREATE_CHANNEL,
   payload: channel,
+});
+
+const postMessageAction = (message) => ({
+  type: POST_MESSAGE,
+  payload: message,
 });
 
 // const joinChannelAction = (channel) => {
@@ -68,6 +74,24 @@ export const getChannelMessages = (channelId) => async (dispatch) => {
     return messagesArr;
   } else {
     return "get channel messages err";
+  }
+};
+
+export const postMessageThunk = (message) => async (dispatch) => {
+  const res = await fetch(`/api/channels/post/${message.channel_id}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(message),
+  });
+
+  if (res.ok) {
+    const messages = await res.json();
+    const messagesArr = messages["messages"];
+    // console.log("messages", )
+    dispatch(getChannelMessagesAction(messagesArr));
+    return messagesArr;
+  } else {
+    return "post message err";
   }
 };
 

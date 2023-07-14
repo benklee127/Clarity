@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllChannelsThunk, loadChannel } from "../store/channel";
+import OpenModalButton from "./OpenModalButton";
+import CreateChannelModal from "./CreateChannelModal";
+import LoginFormModal from "./LoginFormModal";
 
 export default function Sidebar() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -17,6 +20,8 @@ export default function Sidebar() {
     console.log("selected channel ", channel.id);
     dispatch(loadChannel(channel));
   };
+
+  const createChannel = () => {};
 
   return (
     <div>
@@ -39,6 +44,10 @@ export default function Sidebar() {
               </button>
             );
           })}
+          <OpenModalButton
+            buttonText="+"
+            modalComponent={<CreateChannelModal />}
+          />
         </div>
         <div className="sidebar-chat-section">Chat List</div>
       </div>
