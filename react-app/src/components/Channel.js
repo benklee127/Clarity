@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getChannelMessages } from "../store/channel";
 import MessageForm from "./MessageForm";
 import { postMessageThunk } from "../store/channel";
-
+import OpenModalButton from "./OpenModalButton";
+import CreateChannelModal from "./CreateChannelModal";
 export default function Channel() {
   const currChannel = useSelector((state) => state.channels.currChannel);
   const sessionUser = useSelector((state) => state.session.user);
@@ -40,8 +41,26 @@ export default function Channel() {
       Channel Component
       <div className="channel-section">
         <div className="channel-header">
-          <div>{currChannel.title}</div>
-          <div>{currChannel.description}</div>
+          {/* {currChannel} */}
+          {
+            (currChannel.type = "gc" ? (
+              <>
+                <div>{currChannel.title}</div>
+                <div>{currChannel.description}</div>
+                <OpenModalButton
+                  buttonText="+"
+                  modalComponent={
+                    <CreateChannelModal
+                      type="update"
+                      channelId={currChannel.id}
+                    />
+                  }
+                />
+              </>
+            ) : (
+              <>hi</>
+            ))
+          }
         </div>
         <div className="channel-gallery">
           Channel Gallery

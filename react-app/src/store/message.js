@@ -1,10 +1,21 @@
-const LOAD_CHANNEL = "/channels/LOAD_CHANNEL";
+// const UPDATE_MESSAGE = "/messages/UPDATE_MESSAGE";
 
-const getAllChannelsAction = (channels) => ({
-  type: GET_ALL_CHANNELS,
-  payload: channels,
-});
+// export const updateMessageThunk = (message) => async (dispatch) => {
+//   const res = await fetch(`/api/message/${message.id}`, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(message),
+//   });
 
-const initialState = {
+//   if (res.ok) {
+//     const messages = await res.json();
+//     const messagesArr = messages["messages"];
+//     // console.log("messages", )
+//     dispatch(getChannelMessagesAction(messagesArr));
+//     return messagesArr;
+//   } else {
+//     return "post message err";
+//   }
+// };
 
-};
+// const initialState = {};
