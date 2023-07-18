@@ -3,12 +3,13 @@ from flask_login import login_required, current_user
 from app.models import User, Channel, Message, db
 from app.forms import MessageForm,ChannelForm
 from datetime import date
+from sqlalchemy import exists
 
 channel_routes = Blueprint('channels', __name__)
 
 #create chat helper
 def create_chat(key):
-    new_chat = Channel(user_id=current_user.id, key=key, type='dm')
+    new_chat = Channel(user_id=current_user.id, key=key, chType='dm')
     db.session.add(new_chat)
     db.session.commit()
     return new_chat
@@ -16,12 +17,12 @@ def create_chat(key):
 #print list of channels
 @channel_routes.route('/')
 def get_channels():
-    channels = Channel.query.filter(Channel.type == 'gc').all()
+    channels = Channel.query.filter(Channel.chType == 'gc').all()
     return {'channels' : [channel.to_dict() for channel in channels]}
 
 @channel_routes.route('/chats')
 def get_chats():
-    channels = Channel.query.filter(Channel.type == 'dm').all()
+    channels = Channel.query.filter(Channel.chType == 'dm').all()
     return {'channels' : [channel.to_dict() for channel in channels]}
 
 #print list of channels
@@ -53,13 +54,19 @@ def get_channel_by_key(key):
 
 @channel_routes.route('/selectdm/<string:key>')
 def select_chat(key):
+    #check if alr exists if not then create chat
+    test = Channel.query.filter_by(key = key).first()
+    if(not test):
+        print('no existing one found')
+        new_chat = create_chat(key)
+
+    #find chat by key
     chat  = Channel.query.filter(Channel.key == key)
-    print('FOUNDFOUNDFOUNDFOUNDFOUNDFOUNDFOUNDFOUNDFOUNDFOUND? ', chat[0])
+
     if chat[0]:
         return chat[0].to_dict()
     else:
-        print('no existing one found')
-        new_chat = create_chat(key)
+        print('err')
         return new_chat
 
 #get channels a user is in
@@ -92,7 +99,7 @@ def create_channel():
     form = ChannelForm()
     print('form data', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
-    new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], type='gc')
+    new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], chType='gc')
     db.session.add(new_channel)
     db.session.commit()
     return get_all_channels()
@@ -105,6 +112,19 @@ def update_channel(channel_id):
     update_channel.description = form.data['description']
     db.session.commit()
     return  get_all_channels()
+
+@channel_routes.route('/messageupdate/<int:message_id>', methods=['POST'])
+def update_message(message_id):
+    form = MessageForm()
+    print("HELLOHELLOHELLOHELHOELHEOHOEHOEHOEOHEHLEHLEh", form.data['content'])
+    update_message = Message.query.get(message_id)
+    update_message.content = form.data["content"]
+    db.session.commit()
+    return get_channel_posts(update_message.channel_id)
+
+
+# @channel_routes.route('/messagedelete/<int:message_id>')
+# def delete_message(message_id):
 
 #update a channel(group channel)
 # @channel_routes.route('/update/<int:channel_id>', methods=["POST"])
@@ -122,6 +142,6 @@ def update_channel(channel_id):
 # #create a channel(direct message)
 # @channel_routes.route('/createdm/<string:key>')
 # def create_channel(key):
-#     new_channel = Channel(type='dm', key=key)
+#     new_channel = Channel(chType='dm', key=key)
 #     db.session.add(new_channel)
 #     db.session.commit()

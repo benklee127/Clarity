@@ -35,7 +35,10 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_USERS: {
       const newState = { ...state, allUsers: [] };
-      newState.allUsers = action.payload;
+      console.log("action");
+      action.payload.forEach((user) => {
+        newState.allUsers[user.id] = user;
+      });
       return newState;
     }
     default:

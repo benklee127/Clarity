@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getChannelMessages } from "../store/channel";
 import MessageForm from "./MessageForm";
+import Message from "./Message";
 import { postMessageThunk } from "../store/channel";
 import OpenModalButton from "./OpenModalButton";
 import CreateChannelModal from "./CreateChannelModal";
 export default function Channel() {
   const currChannel = useSelector((state) => state.channels.currChannel);
   const sessionUser = useSelector((state) => state.session.user);
+  const allUsers = useSelector((state) => state.users.allUsers);
 
   const channelMessages = useSelector(
     (state) => state.channels.channelMessages
@@ -34,48 +36,58 @@ export default function Channel() {
       dispatch(getChannelMessages(currChannel.id))
     );
   };
+  console.log("all users", allUsers);
 
   if (currChannel == {}) return null;
+
+  let chKey = currChannel.key;
+  let otherUser;
+  if (chKey) {
+    let ids = chKey.split("_");
+    var idNums = ids.map(Number);
+    console.log("ids", idNums);
+    let otherUserId = idNums[0];
+    if (sessionUser.id === idNums[0]) otherUserId = idNums[1];
+    console.log("other user", allUsers[otherUserId]);
+
+    otherUser = allUsers[otherUserId];
+  }
+
   return (
     <div className="channel-wrapper">
       Channel Component
       <div className="channel-section">
         <div className="channel-header">
-          {/* {currChannel} */}
-          {
-            (currChannel.type = "gc" ? (
-              <>
-                <div>{currChannel.title}</div>
-                <div>{currChannel.description}</div>
-                <OpenModalButton
-                  buttonText="+"
-                  modalComponent={
-                    <CreateChannelModal
-                      type="update"
-                      channelId={currChannel.id}
-                    />
-                  }
-                />
-              </>
-            ) : (
-              <>hi</>
-            ))
-          }
+          {currChannel.chType == "gc" ? (
+            <div>
+              <div>{currChannel.title}</div>
+              <div>{currChannel.description}</div>
+              <OpenModalButton
+                buttonText="+"
+                modalComponent={
+                  <CreateChannelModal
+                    type="update"
+                    channelId={currChannel.id}
+                  />
+                }
+              />
+            </div>
+          ) : (
+            <>
+              <div>
+                {otherUser
+                  ? otherUser.first_name + " " + otherUser.last_name
+                  : ""}
+              </div>
+            </>
+          )}
         </div>
         <div className="channel-gallery">
-          Channel Gallery
+          {currChannel.chType == "gc" ? "Channel Gallery" : "Chat Gallery"}
           <div className="channel-messages">
             {channelMessages && channelMessages.length > 0
               ? channelMessages.map((message) => {
-                  return (
-                    <div>
-                      {message.user.first_name +
-                        " " +
-                        message.user.last_name +
-                        ": "}
-                      {message.content}
-                    </div>
-                  );
+                  return <Message message={message} />;
                 })
               : ""}
           </div>

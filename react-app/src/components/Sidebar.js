@@ -62,6 +62,7 @@ export default function Sidebar() {
             chat list
             {allUsers.map((user) => {
               console.log("map function run once for ", user);
+              if (!sessionUser) return "";
               if (user.id == sessionUser.id) return "";
               let key = "";
               if (sessionUser.id < user.id)

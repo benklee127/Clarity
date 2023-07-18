@@ -4,10 +4,10 @@ from datetime import date
 
 # Adds a demo user, you can add other users here if you want
 def seed_channels():
-    channel1 = Channel(type='dm', key="1_2")
-    channel2 = Channel(type='dm', key="2_3")
-    channel3 = Channel(type='gc', title="GroupChannel1",description="groupchannel1 desc", user_id=1)
-    channel4 = Channel(type='gc', title="GroupChannel2",description="groupchannel2 desc", user_id=1)
+    channel1 = Channel(chType='dm', key="1_2")
+    channel2 = Channel(chType='dm', key="2_3")
+    channel3 = Channel(chType='gc', title="GroupChannel1",description="groupchannel1 desc", user_id=1)
+    channel4 = Channel(chType='gc', title="GroupChannel2",description="groupchannel2 desc", user_id=1)
 
     db.session.add(channel1)
     db.session.add(channel2)

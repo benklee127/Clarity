@@ -11,6 +11,9 @@ const POST_MESSAGE = "/channels/POST_MESSAGE";
 const UPDATE_CHANNEL = "/channels/UPDATE_CHANNEL";
 const SELECT_CHAT = "/channels/SELECT_CHAT";
 
+const UPDATE_MESSAGE = "/channels/UPDATE_MESSAGE";
+const DELETE_MESSAGE = "/channels/DELETE_MESSAGE";
+
 const getAllChannelsAction = (channels) => ({
   type: GET_ALL_CHANNELS,
   payload: channels,
@@ -51,6 +54,15 @@ const postMessageAction = (message) => ({
   payload: message,
 });
 
+const updateMessageAction = (message) => ({
+  type: UPDATE_MESSAGE,
+  payload: message,
+});
+const deleteMessageAction = (message) => ({
+  type: DELETE_MESSAGE,
+  payload: message,
+});
+
 const selectChatAction = (channels) => ({
   type: SELECT_CHAT,
   payload: channels,
@@ -61,12 +73,20 @@ const selectChatAction = (channels) => ({
 //   payload: channel;
 // };
 
+//helpers
+export const loadChannel = (channel) => async (dispatch) => {
+  console.log("channel in load channel", channel);
+  dispatch(loadChannelAction(channel));
+  return channel;
+};
+
 //thunks
 export const getAllChannelsThunk = () => async (dispatch) => {
   const res = await fetch("/api/channels");
 
   if (res.ok) {
     const channels = await res.json();
+    console.log("channels after getting all", channels.channels);
     dispatch(getAllChannelsAction(channels.channels));
     return channels;
   } else {
@@ -80,6 +100,7 @@ export const getChannelMessages = (channelId) => async (dispatch) => {
 
   if (res.ok) {
     const messages = await res.json();
+    console.log("channels after getting all", messages);
     const messagesArr = messages["messages"];
     console.log("messages", messagesArr);
     dispatch(getChannelMessagesAction(messagesArr));
@@ -116,6 +137,7 @@ export const createChannelThunk = (channel) => async (dispatch) => {
   });
   if (res.ok) {
     const channels = await res.json();
+    dispatch(loadChannel(channel.id));
     dispatch(createChannelAction(channels.channels));
     return channels.channels;
   } else {
@@ -139,6 +161,25 @@ export const updateChannelThunk = (channel, channelId) => async (dispatch) => {
   }
 };
 
+export const updateMessageThunk =
+  (newMessage, messageId) => async (dispatch) => {
+    const res = await fetch(`/api/channels/messageupdate/${messageId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newMessage),
+    });
+
+    if (res.ok) {
+      const messages = await res.json();
+      const messagesArr = messages["messages"];
+      // console.log("messages", )
+      dispatch(getChannelMessagesAction(messagesArr));
+      return messagesArr;
+    } else {
+      return "create channel err";
+    }
+  };
+
 export const selectChatThunk = (key) => async (dispatch) => {
   console.log("chat thunk before res", key);
   const res = await fetch(`/api/channels/selectdm/${key}`);
@@ -149,13 +190,6 @@ export const selectChatThunk = (key) => async (dispatch) => {
   } else {
     return "create channel err";
   }
-};
-
-//helpers
-export const loadChannel = (channel) => async (dispatch) => {
-  console.log("channel in load channel", channel);
-  dispatch(loadChannelAction(channel));
-  return channel;
 };
 
 //reducer

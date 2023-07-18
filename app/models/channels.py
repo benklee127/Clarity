@@ -7,7 +7,7 @@ class Channel(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String(10), nullable=False) #direct message(dm), and group channel(gc)
+    chType = db.Column(db.String(10), nullable=False) #direct message(dm), and group channel(gc)
     title = db.Column(db.String(50)) #title for gcs
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id"))) #creator for group channel
     description = db.Column(db.String(500)) #description for group channels
@@ -23,9 +23,10 @@ class Channel(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'type' : self.type,
+            'chType' : self.chType,
             'title': self.title,
             'user_id': self.user_id,
             'description': self.description,
             'icon': self.icon,
+            'key': self.key
         }

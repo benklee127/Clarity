@@ -25,6 +25,7 @@
 }
 
 
+
 .channel-wrapper {
     width: 80vw;
     height: 90vh;
@@ -62,4 +63,8 @@
 .channel-message {
     height: 250px;
     border: dashed white;
+}
+
+.message-edit .hidden {
+    visibility: hidden;
 }
