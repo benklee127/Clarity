@@ -123,8 +123,13 @@ def update_message(message_id):
     return get_channel_posts(update_message.channel_id)
 
 
-# @channel_routes.route('/messagedelete/<int:message_id>')
-# def delete_message(message_id):
+@channel_routes.route('/deletemessage/<int:message_id>/<int:channel_id>')
+def delete_message(message_id,channel_id):
+    message_to_delete = Message.query.get(message_id)
+    if message_to_delete.user.id ==current_user.id:
+        db.session.delete(message_to_delete)
+        db.session.commit()
+    return get_channel_posts(channel_id)
 
 #update a channel(group channel)
 # @channel_routes.route('/update/<int:channel_id>', methods=["POST"])

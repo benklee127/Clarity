@@ -1,7 +1,11 @@
 import "./Home.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getChannelMessages, updateMessageThunk } from "../store/channel";
+import {
+  deleteMessageThunk,
+  getChannelMessages,
+  updateMessageThunk,
+} from "../store/channel";
 import MessageForm from "./MessageForm";
 import { postMessageThunk } from "../store/channel";
 import OpenModalButton from "./OpenModalButton";
@@ -9,6 +13,7 @@ import OpenModalButton from "./OpenModalButton";
 export default function Message({ message }) {
   const sessionUser = useSelector((state) => state.session.user);
   const allUsers = useSelector((state) => state.users.allUsers);
+  const currChannel = useSelector((state) => state.channels.currChannel);
   const [errors, setErrors] = useState([]);
   const [newContent, setNewContent] = useState(message.content);
   const channelMessages = useSelector(
@@ -31,6 +36,10 @@ export default function Message({ message }) {
     const data = await dispatch(updateMessageThunk(newMessage, messageId));
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    const data = await dispatch(deleteMessageThunk(message.id, currChannel.id));
+  };
   const toggleEdit = () => {
     console.log("toggle attempt", showEditForm);
     setShowEditForm(!showEditForm);
@@ -71,7 +80,7 @@ export default function Message({ message }) {
               </div>
             </form>
           </div>
-          <button>Delete</button>
+          <button onClick={handleDelete}>Delete</button>
         </>
       ) : (
         ""

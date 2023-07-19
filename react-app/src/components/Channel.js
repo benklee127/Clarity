@@ -37,10 +37,12 @@ export default function Channel() {
     );
   };
   console.log("all users", allUsers);
-
+  let chKey = null;
   if (currChannel == {}) return null;
-
-  let chKey = currChannel.key;
+  else {
+    console.log("currChannel", currChannel);
+    chKey = currChannel.key;
+  }
   let otherUser;
   if (chKey) {
     let ids = chKey.split("_");

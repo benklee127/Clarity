@@ -192,6 +192,22 @@ export const selectChatThunk = (key) => async (dispatch) => {
   }
 };
 
+export const deleteMessageThunk =
+  (messageId, channelId) => async (dispatch) => {
+    const res = await fetch(
+      `/api/channels/deletemessage/${messageId}/${channelId}`
+    );
+    if (res.ok) {
+      const messages = await res.json();
+      const messagesArr = messages["messages"];
+      // console.log("messages", )
+      dispatch(getChannelMessagesAction(messagesArr));
+      return messagesArr;
+    } else {
+      return "create channel err";
+    }
+  };
+
 //reducer
 const initialState = {
   allChannels: [],
