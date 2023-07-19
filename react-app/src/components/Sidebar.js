@@ -34,32 +34,38 @@ export default function Sidebar() {
     <div>
       <div className="sidebar-wrapper">
         {/* sidebar Component */}
+        <div className="workspace-bar">Workspace Name</div>
         <div className="sidebar-channel-section">
-          <div>Channel List Header</div>
-          Channel List
+          <div>Channels</div>
+          {/* Channel List */}
           {allChannels.map((channel) => {
-            console.log("map function run once for ", channel);
-            return (
-              <button
-                className="channel-button"
-                key={"ch-button-" + channel.id}
-                onClick={() => {
-                  selectChannel(channel);
-                }}
-              >
-                {channel.title}
-              </button>
-            );
+            // console.log("channel type", channel);
+            if (channel.chType === "gc") {
+              console.log("map function run once for ", channel);
+              return (
+                <button
+                  className="channel-button"
+                  key={"ch-button-" + channel.id}
+                  onClick={() => {
+                    selectChannel(channel);
+                  }}
+                >
+                  {channel.title}
+                </button>
+              );
+            } else return "";
           })}
-          <OpenModalButton
-            buttonText="+"
-            modalComponent={<CreateChannelModal type="create" />}
-          />
+          <div id="create-channel-button">
+            <OpenModalButton
+              className="create-channel-button"
+              buttonText="+"
+              modalComponent={<CreateChannelModal type="create" />}
+            />
+          </div>
         </div>
         <div className="sidebar-chat-section">
           <div className="sidebar-channel-section">
-            <div> Chat List header</div>
-            chat list
+            <div> Chats</div>
             {allUsers.map((user) => {
               console.log("map function run once for ", user);
               if (!sessionUser) return "";

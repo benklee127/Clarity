@@ -1,5 +1,19 @@
+.navbar-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+}
+.prof-button-wrapper {
+  padding-right: 50px;
+}
+
+
+
 .profile-dropdown {
   position: absolute;
+  background-color: white;
+  right: 50px;
 }
 
 .hidden {

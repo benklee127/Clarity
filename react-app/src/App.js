@@ -18,10 +18,10 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/">
+          <Route path="/home">
+            <Navigation isLoaded={isLoaded} />
             <Home />
           </Route>
           <Route path="/login">

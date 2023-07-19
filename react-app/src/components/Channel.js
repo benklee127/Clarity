@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getChannelMessages } from "../store/channel";
+import { deleteChannelThunk, getChannelMessages } from "../store/channel";
 import MessageForm from "./MessageForm";
 import Message from "./Message";
 import { postMessageThunk } from "../store/channel";
 import OpenModalButton from "./OpenModalButton";
 import CreateChannelModal from "./CreateChannelModal";
+
 export default function Channel() {
   const currChannel = useSelector((state) => state.channels.currChannel);
   const sessionUser = useSelector((state) => state.session.user);
@@ -19,10 +20,15 @@ export default function Channel() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("useeffect in channel ", currChannel.id);
-    dispatch(getChannelMessages(currChannel.id));
+    // console.log("useeffect in channel ", currChannel.id);
+    if (currChannel != {} && currChannel != undefined)
+      dispatch(getChannelMessages(currChannel.id));
   }, [currChannel, submitContent]);
 
+  const deleteChannel = async (e) => {
+    e.preventDefault();
+    const data = await dispatch(deleteChannelThunk(currChannel.id));
+  };
   const postMessage = async (e) => {
     e.preventDefault();
     setSubmitContent(content);
@@ -35,10 +41,11 @@ export default function Channel() {
     dispatch(postMessageThunk(newMessage)).then(
       dispatch(getChannelMessages(currChannel.id))
     );
+    setContent("");
   };
   console.log("all users", allUsers);
   let chKey = null;
-  if (currChannel == {}) return null;
+  if (currChannel == {} || currChannel == undefined) return null;
   else {
     console.log("currChannel", currChannel);
     chKey = currChannel.key;
@@ -57,7 +64,7 @@ export default function Channel() {
 
   return (
     <div className="channel-wrapper">
-      Channel Component
+      {/* Channel Component */}
       <div className="channel-section">
         <div className="channel-header">
           {currChannel.chType == "gc" ? (
@@ -73,6 +80,8 @@ export default function Channel() {
                   />
                 }
               />
+
+              <button>🗑️</button>
             </div>
           ) : (
             <>
@@ -85,7 +94,7 @@ export default function Channel() {
           )}
         </div>
         <div className="channel-gallery">
-          {currChannel.chType == "gc" ? "Channel Gallery" : "Chat Gallery"}
+          {/* {currChannel.chType == "gc" ? "Channel Gallery" : "Chat Gallery"} */}
           <div className="channel-messages">
             {channelMessages && channelMessages.length > 0
               ? channelMessages.map((message) => {
@@ -95,7 +104,7 @@ export default function Channel() {
           </div>
         </div>
         <div className="channel-message">
-          Channel Message Form
+          {/* Channel Message Form */}
           <form onSubmit={postMessage} className="message-form">
             <textarea
               className="message-form-content"

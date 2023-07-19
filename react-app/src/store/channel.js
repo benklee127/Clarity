@@ -4,6 +4,7 @@ const GET_CHANNEL_USERS = "/channels/GET_CHANNEL_USERS";
 const GET_CHANNEL = "/channels/GET_CHANNEL";
 const GET_CHANNEL_MESSAGES = "/channels/GET_CHANNEL_MESSAGES";
 const CREATE_CHANNEL = "/channels/CREATE_CHANNEL";
+const DELETE_CHANNEL = "/channels/DELETE_CHANNEL";
 const POST_CHANNEL = "/channels/POST_CHANNEL";
 const JOIN_CHANNEL = "/channels/JOIN_CHANNEL";
 const LOAD_CHANNEL = "/channels/LOAD_CHANNEL";
@@ -52,6 +53,11 @@ const updateChannelAction = (channels) => ({
 const postMessageAction = (message) => ({
   type: POST_MESSAGE,
   payload: message,
+});
+
+const deleteChannelAction = (channelId) => ({
+  type: DELETE_CHANNEL,
+  payload: channelId,
 });
 
 const updateMessageAction = (message) => ({
@@ -137,8 +143,8 @@ export const createChannelThunk = (channel) => async (dispatch) => {
   });
   if (res.ok) {
     const channels = await res.json();
-    dispatch(loadChannel(channel.id));
     dispatch(createChannelAction(channels.channels));
+    console.log("channel.id", channel.id);
     return channels.channels;
   } else {
     return "create channel err";
@@ -208,6 +214,19 @@ export const deleteMessageThunk =
     }
   };
 
+export const deleteChannelThunk = (channelId) => async (dispatch) => {
+  const res = await fetch(`/api/channels/deletechannel/${channelId}`);
+  if (res.ok) {
+    const channels = await res.json();
+    const channelArr = channels["channels"];
+    // console.log("messages", )
+    dispatch(getChannelMessagesAction(channelArr));
+    return channelArr;
+  } else {
+    return "create channel err";
+  }
+};
+
 //reducer
 const initialState = {
   allChannels: [],
@@ -241,14 +260,17 @@ const channelReducer = (state = initialState, action) => {
       return newState;
     }
     case UPDATE_CHANNEL: {
-      const existingCurrChannel = { ...state.currChannel };
+      const newState = { ...state, allChannels: [] };
+      newState.allChannels = action.payload;
+      return newState;
+    }
+    case DELETE_CHANNEL: {
       const newState = { ...state, allChannels: [], currChannel: {} };
       newState.allChannels = action.payload;
-      newState.currChannel = existingCurrChannel;
       return newState;
     }
     case SELECT_CHAT: {
-      const newState = { ...state, currChannel: [] };
+      const newState = { ...state, currChannel: {} };
       newState.currChannel = action.payload;
       return newState;
     }

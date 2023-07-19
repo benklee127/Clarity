@@ -6,7 +6,7 @@ import "./Home.css";
 export default function Home() {
   return (
     <div className="home-wrapper">
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="main-wrapper">
         <Sidebar />
         <Channel />
