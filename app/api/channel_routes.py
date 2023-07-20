@@ -7,6 +7,16 @@ from sqlalchemy import exists
 
 channel_routes = Blueprint('channels', __name__)
 
+def validation_errors_to_error_messages(validation_errors):
+    """
+    Simple function that turns the WTForms validation errors into a simple list
+    """
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    return errorMessages
+
 #create chat helper
 def create_chat(key):
     new_chat = Channel(user_id=current_user.id, key=key, chType='dm')
@@ -99,10 +109,12 @@ def create_channel():
     form = ChannelForm()
     print('form data', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
-    new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], chType='gc')
-    db.session.add(new_channel)
-    db.session.commit()
-    return get_all_channels()
+    if form.validate_on_submit():
+        new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], chType='gc')
+        db.session.add(new_channel)
+        db.session.commit()
+        return get_all_channels()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @channel_routes.route('/update/<int:channel_id>', methods=["POST"])
 def update_channel(channel_id):

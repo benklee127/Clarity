@@ -9,6 +9,8 @@ import LoginFormModal from "./LoginFormModal";
 import { logout } from "../store/session";
 import { useDispatch } from "react-redux";
 import SignupFormModal from "./SignupFormModal";
+import { login  } from "../store/session";
+
 export default function Home({ isLoaded }) {
   const currentUser = useSelector((state) => state.session.user);
   const currChannel = useSelector((state) => state.channels.currChannel);
@@ -17,6 +19,10 @@ export default function Home({ isLoaded }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+  };
+
+  const demoUser = () => {
+    return dispatch(login("demo@aa.io", "password"));
   };
 
   if (currentUser) {
@@ -47,7 +53,7 @@ export default function Home({ isLoaded }) {
               buttonText="Create an account"
               modalComponent={<SignupFormModal />}
             />
-            <button>Demo user</button>
+            <button onClick={demoUser}>Demo user</button>
           </div>
           <div className="dh-main-image">background image</div>
         </div>
