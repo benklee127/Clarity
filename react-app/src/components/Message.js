@@ -34,6 +34,7 @@ export default function Message({ message }) {
     let messageId = message.id;
 
     const data = await dispatch(updateMessageThunk(newMessage, messageId));
+    setShowEditForm(false);
   };
 
   const handleDelete = async (e) => {
@@ -53,40 +54,56 @@ export default function Message({ message }) {
   const messageEditClass = "message-edit" + (showEditForm ? "" : " hidden");
 
   if (message == {} || !message || !message.user) return "";
+
   console.log("message", message);
   return (
-    <div className="Message">
-      {message.user.first_name + " " + message.user.last_name + ": "}
-      {message.content}
-      {message.user_id === sessionUser.id ? (
-        <>
-          <button onClick={toggleEdit}>Edit</button>
-          <div className={messageEditClass}>
-            <form onSubmit={handleSubmit}>
-              <ul>
-                {errors.map((error, idx) => (
-                  <li key={idx}>{error}</li>
-                ))}
-              </ul>
-              <textarea
-                value={newContent}
-                onChange={(e) => setNewContent(e.target.value)}
-                required
-                minLength={1}
-                maxLength={300}
-              />
-              <div className="comment-button">
-                <button type="submit" onClick={closeEdit}>
-                  Save
-                </button>
-              </div>
-            </form>
+    <div className="message">
+      <div className="image-column">
+        <div className="image-wrapper">
+          <img src={message.user.profile_photo} />
+        </div>
+      </div>
+      <div className="message-column">
+        <div className="message-header">
+          <div className="message-name-date-wrapper">
+            {message.user.first_name + " " + message.user.last_name + " "}
+            <div className="message-date">{message.created_at}</div>
           </div>
-          <button onClick={handleDelete}>Delete</button>
-        </>
-      ) : (
-        ""
-      )}
+          {message.user_id === sessionUser.id ? (
+            <div className="comment-button">
+              <button onClick={toggleEdit}>Edit</button>
+              <button onClick={handleDelete}>Delete</button>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="message-content">
+          {showEditForm ? (
+            <div className={messageEditClass}>
+              <form onSubmit={handleSubmit}>
+                <ul>
+                  {errors.map((error, idx) => (
+                    <li key={idx}>{error}</li>
+                  ))}
+                </ul>
+                <textarea
+                  value={newContent}
+                  onChange={(e) => setNewContent(e.target.value)}
+                  required
+                  minLength={1}
+                  maxLength={300}
+                />
+                <div className="comment-button">
+                  <button onClick={handleSubmit}>Save</button>
+                </div>
+              </form>
+            </div>
+          ) : (
+            message.content
+          )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -88,28 +88,107 @@
 
 .channel-gallery {
     height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     border-top: 0.5px solid rgb(151, 107, 107);
 }
 
+.channel-messages {
+    padding-top: 6px;
+}
 .channel-message {
-    max-height: 20vh;
+
+    height: 20vh;
     border-top: 0.5px solid rgb(151, 107, 107);
 }
 
+/* messages */
 
-.Message {
-    padding-top:5px;
-    padding-left:5px;
-
+.message {
+    display:flex;
+    padding-top:6px;
+    padding-bottom: 6px;
+    padding-left:10px;
+    min-height:  40px;
+    width: 80vw;
 }
 
-.Message:hover{
-    background-color: rgb(203, 186, 186);;
+.message .image-wrapper {
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.message img {
+    max-height: 40px;
+}
+
+.message:hover{
+    background-color: rgb(203, 186, 186);
+}
+
+.comment-button {
+    display: none;
+}
+
+.message:hover .comment-button {
+    display: flex;
+}
+
+.message-header {
+    font-weight: 600;
+    width:  80vw;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.message-name-date-wrapper {
+    display:flex;
+    flex-direction: row;
+    align-content: flex-start;
+}
+
+.message-date {
+    font-weight: 100;
+    padding-left: 20px;
+    font-size: 12px;
+}
+
+.message-column {
+    padding-left:  10px;
+    display:flex;
+    width: 70vw;
+    flex-wrap: wrap;
+}
+
+.message-content {
+    overflow-wrap: break-word;
+    width: 70vw;
+
+    /* inline-size: 150px; */
+}
+
+.message-edit textarea{
+    width: 99%;
+    height: 100%;
+    margin: 5px;
+    box-sizing: border-box;
+    padding: 4px;
+    border: 2px solid rgb(151, 107, 107);
+    border-radius: 4px;
+    background-color: #f8f8f8;
+
+    resize: none;
 }
 
 .message-edit .hidden {
     visibility: hidden;
 }
+
 
 .channel-button {
     padding-top: 2px;
@@ -200,3 +279,29 @@ button:hover {
 .dh-main-image {
     width: 60vw;
 }
+
+/* scrollbars */
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgb(245, 237, 237);
+
+
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #674b4b;
+    border-radius: 5px;
+
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3c0c0c;
+  }

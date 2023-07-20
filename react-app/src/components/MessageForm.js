@@ -30,6 +30,7 @@ export default function MessageForm() {
           className="message-form-content"
           type="textarea"
           value={content}
+          minLength="1"
           maxLength={500}
           onChange={(e) => setContent(e.target.value)}
         >

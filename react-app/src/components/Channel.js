@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteChannelThunk, getChannelMessages } from "../store/channel";
 import MessageForm from "./MessageForm";
@@ -11,6 +11,7 @@ export default function Channel(currChannelProp) {
   const currChannel = useSelector((state) => state.channels.currChannel);
   const sessionUser = useSelector((state) => state.session.user);
   const allChannels = useSelector((state) => state.channels.allChannels);
+  const bottomRef = useRef(null);
   const allUsers = useSelector((state) => state.users.allUsers);
   const [channelDeleted, setChannelDeleted] = useState(false);
   const channelMessages = useSelector(
@@ -33,19 +34,22 @@ export default function Channel(currChannelProp) {
     setChannelDeleted(true);
     setChannelDeleted(false);
   };
+
   const postMessage = async (e) => {
     e.preventDefault();
-    setSubmitContent(content);
-    let newMessage = {
-      content: content,
-      user_id: sessionUser.id,
-      channel_id: currChannel.id,
-    };
-    console.log("new message", newMessage);
-    dispatch(postMessageThunk(newMessage)).then(
-      dispatch(getChannelMessages(currChannel.id))
-    );
-    setContent("");
+    if (content.length > 0) {
+      setSubmitContent(content);
+      let newMessage = {
+        content: content,
+        user_id: sessionUser.id,
+        channel_id: currChannel.id,
+      };
+      console.log("new message", newMessage);
+      const data = await dispatch(postMessageThunk(newMessage));
+      dispatch(getChannelMessages(currChannel.id));
+      setContent("");
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
   console.log("all users", allUsers);
   let chKey = null;
@@ -108,6 +112,7 @@ export default function Channel(currChannelProp) {
                   return <Message message={message} />;
                 })
               : ""}
+            <div ref={bottomRef} />
           </div>
         </div>
         <div className="channel-message">
@@ -117,6 +122,7 @@ export default function Channel(currChannelProp) {
               className="message-form-content"
               type="textarea"
               value={content}
+              minLength={1}
               maxLength={500}
               onChange={(e) => setContent(e.target.value)}
             >
