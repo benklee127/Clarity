@@ -58,6 +58,7 @@ export default function Channel(currChannelProp) {
     console.log("currChannel", currChannel);
     chKey = currChannel.key;
   }
+  
   let otherUser;
   if (chKey) {
     let ids = chKey.split("_");

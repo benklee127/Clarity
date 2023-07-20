@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, Channel, Message, db
 from app.forms import MessageForm,ChannelForm
-from datetime import date
+from datetime import datetime
 from sqlalchemy import exists
 
 channel_routes = Blueprint('channels', __name__)
@@ -90,7 +90,7 @@ def post_message(channel_id):
     form = MessageForm()
     print('form data', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
-    new_post = Message(content=form.data['content'], user_id=current_user.id, created_at=date.today(), channel_id=channel_id)
+    new_post = Message(content=form.data['content'], user_id=current_user.id, created_at=datetime.now(), channel_id=channel_id)
     db.session.add(new_post)
     db.session.commit()
     return new_post.to_dict()
