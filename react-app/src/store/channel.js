@@ -258,7 +258,14 @@ const channelReducer = (state = initialState, action) => {
     case GET_CHANNEL_MESSAGES: {
       console.log("get payload channel messages in reducer", action.payload);
       const newState = { ...state, channelMessages: [] };
-      newState.channelMessages = action.payload;
+      const sorted = action.payload.sort((a, b) => {
+        let keyA = a.id;
+        let keyB = b.id;
+        if (keyA < keyB) return -1;
+        else return 1;
+      });
+      newState.channelMessages = sorted;
+
       return newState;
     }
     case CREATE_CHANNEL: {
