@@ -145,9 +145,14 @@ export const createChannelThunk = (channel) => async (dispatch) => {
     const channels = await res.json();
     dispatch(createChannelAction(channels.channels));
     console.log("channel.id", channel.id);
-    return channels.channels;
+    return null;
+  } else if (res.status < 500) {
+    const data = await res.json();
+    if (data.errors) {
+      return data.errors;
+    }
   } else {
-    return "create channel err";
+    return ["An error occurred. Please try again."];
   }
 };
 

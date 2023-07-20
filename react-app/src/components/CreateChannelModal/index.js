@@ -23,14 +23,18 @@ function CreateChannelModal({ type, channelId }) {
       title: title,
       description: description,
     };
+    let data;
     if (type === "create") {
-      const data = await dispatch(createChannelThunk(newChannel));
+      data = await dispatch(createChannelThunk(newChannel));
     } else if (type === "update") {
       console.log("update channel");
-      const data = await dispatch(updateChannelThunk(newChannel, channelId));
+      data = await dispatch(updateChannelThunk(newChannel, channelId));
     }
-
-    closeModal();
+    if (data) {
+      setErrors(data);
+    } else {
+      closeModal();
+    }
   };
 
   return (
@@ -52,12 +56,11 @@ function CreateChannelModal({ type, channelId }) {
           />
         </label>
         <label>
-          Description (optional)
+          Description
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required
           />
         </label>
         <button type="submit">{type == "create" ? "Create" : "Update"}</button>
