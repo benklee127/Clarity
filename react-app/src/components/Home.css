@@ -57,6 +57,10 @@
 } */
 
 /* sidebar css */
+.create-channel-button > button{
+    background-color: rgb(102, 2, 2);
+    text-align: left;
+}
 
 
 /* Channel layout */
@@ -200,16 +204,32 @@
     color: rgb(208, 189, 189);
 }
 
-button:hover {
+.sidebar-channel-section button:hover {
     background-color: rgb(151, 107, 107);
     color: white;
     border: none;
 }
-
-#create-channel-button {
-    background-color: transparent;
+.create-channel-button {
+    width: 100%;
 }
+.create-channel-button button{
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    color: rgb(208, 189, 189);
+    font-weight: 100;
+    width: 100%;
+}
+/* .create-channel-button button:hover{
+    background-color: rgb(151, 107, 107);
+    color: white;
+    border: none;
+} */
 
+.create-channel-button button{
+    background-color: transparent;
+    border: none;
+}
 .message-form {
     height: 20vh;
 }
