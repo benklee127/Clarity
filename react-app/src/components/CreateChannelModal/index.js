@@ -2,28 +2,40 @@ import React, { useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import "./CreateChannelModal.css";
+import {
+  createChannelThunk,
+  loadChannel,
+  updateChannelThunk,
+} from "../../store/channel";
 
-function CreateChannelModal() {
+function CreateChannelModal({ type, channelId }) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
-
-  console.log("hi");
+  console.log("channelId", channelId);
+  console.log("type", type);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const data = await dispatch();
-    // if (data) {
-    //   setErrors(data);
-    // } else {
-    //   closeModal();
-    // }
+    const newChannel = {
+      title: title,
+      description: description,
+    };
+    if (type === "create") {
+      const data = await dispatch(createChannelThunk(newChannel));
+    } else if (type === "update") {
+      console.log("update channel");
+      const data = await dispatch(updateChannelThunk(newChannel, channelId));
+    }
+
+    closeModal();
   };
 
   return (
-    <>
-      <h1>Create a Channel</h1>
+    <div className="create-channel-modal">
+      <h1>{type == "create" ? "Create a Channel" : "Update a channel"}</h1>
       <form onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
@@ -48,9 +60,9 @@ function CreateChannelModal() {
             required
           />
         </label>
-        <button type="submit">Create</button>
+        <button type="submit">{type == "create" ? "Create" : "Update"}</button>
       </form>
-    </>
+    </div>
   );
 }
 

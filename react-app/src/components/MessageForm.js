@@ -20,6 +20,7 @@ export default function MessageForm() {
     };
     console.log("new message", newMessage);
     dispatch(postMessageThunk(newMessage));
+    setContent("");
   };
 
   return (
