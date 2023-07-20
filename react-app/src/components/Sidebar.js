@@ -14,22 +14,23 @@ export default function Sidebar() {
   const sessionUser = useSelector((state) => state.session.user);
   const allChannels = useSelector((state) => state.channels.allChannels);
   const allUsers = useSelector((state) => state.users.allUsers);
-  console.log("user", sessionUser);
+  const currChannel = useSelector((state) => state.channels.currChannel);
+  // console.log("user", sessionUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllChannelsThunk());
     dispatch(getAllUsersThunk());
-  }, []);
+  }, [currChannel]);
   if (allChannels.length < 1 || allUsers.length < 1) return null;
 
   const selectChannel = (channel, key) => {
-    console.log("selected channel ", channel.id, key);
+    // console.log("selected channel ", channel.id, key);
     if (!key) dispatch(loadChannel(channel));
     else dispatch(selectChatThunk(key));
   };
 
-  console.log("allchannels", allChannels);
+  // console.log("allchannels", allChannels);
   return (
     <div>
       <div className="sidebar-wrapper">

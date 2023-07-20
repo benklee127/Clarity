@@ -52,6 +52,8 @@ export default function Message({ message }) {
 
   const messageEditClass = "message-edit" + (showEditForm ? "" : " hidden");
 
+  if (message == {} || !message || !message.user) return "";
+  console.log("message", message);
   return (
     <div className="Message">
       {message.user.first_name + " " + message.user.last_name + ": "}

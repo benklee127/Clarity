@@ -9,18 +9,16 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className="navbar-wrapper">
-
-        {/* <li>
+      {/* <li>
           <NavLink exact to="/">
             Home
           </NavLink>
         </li> */}
-
-        <div></div>
-        <div></div>
-        <div className='prof-button-wrapper'>
-        {isLoaded && <ProfileButton user={sessionUser} />}
-        </div>
+      <div></div>
+      <div></div>
+      <div className="prof-button-wrapper">
+        {<ProfileButton user={sessionUser} />}
+      </div>
     </div>
   );
 }

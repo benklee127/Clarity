@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
-import Channel from "./components/Channel";
-import Sidebar from "./components/Sidebar";
+// import Channel from "./components/Channel";
+// import Sidebar from "./components/Sidebar";
 
 function App() {
+  const sessionUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
@@ -20,8 +21,8 @@ function App() {
     <>
       {isLoaded && (
         <Switch>
-          <Route path="/home">
-            <Navigation isLoaded={isLoaded} />
+          <Route path="/">
+            {/* <Navigation isLoaded={isLoaded} /> */}
             <Home />
           </Route>
           <Route path="/login">

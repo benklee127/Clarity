@@ -7,11 +7,12 @@ import { postMessageThunk } from "../store/channel";
 import OpenModalButton from "./OpenModalButton";
 import CreateChannelModal from "./CreateChannelModal";
 
-export default function Channel() {
+export default function Channel(currChannelProp) {
   const currChannel = useSelector((state) => state.channels.currChannel);
   const sessionUser = useSelector((state) => state.session.user);
+  const allChannels = useSelector((state) => state.channels.allChannels);
   const allUsers = useSelector((state) => state.users.allUsers);
-
+  const [channelDeleted, setChannelDeleted] = useState(false);
   const channelMessages = useSelector(
     (state) => state.channels.channelMessages
   );
@@ -21,13 +22,16 @@ export default function Channel() {
 
   useEffect(() => {
     // console.log("useeffect in channel ", currChannel.id);
+    console.log("use effect run currchan", currChannel);
     if (currChannel != {} && currChannel != undefined)
       dispatch(getChannelMessages(currChannel.id));
-  }, [currChannel, submitContent]);
+  }, [currChannel, submitContent, channelDeleted, allChannels]);
 
   const deleteChannel = async (e) => {
     e.preventDefault();
     const data = await dispatch(deleteChannelThunk(currChannel.id));
+    setChannelDeleted(true);
+    setChannelDeleted(false);
   };
   const postMessage = async (e) => {
     e.preventDefault();
@@ -68,11 +72,12 @@ export default function Channel() {
       <div className="channel-section">
         <div className="channel-header">
           {currChannel.chType == "gc" ? (
-            <div>
-              <div>{currChannel.title}</div>
-              <div>{currChannel.description}</div>
+            <div className="channel-header-wrapper">
+              <div className="ch-title"> # {currChannel.title}</div>
+              <div className="ch-desc">{currChannel.description}</div>
               <OpenModalButton
                 buttonText="+"
+                className="ch-button"
                 modalComponent={
                   <CreateChannelModal
                     type="update"
@@ -81,7 +86,9 @@ export default function Channel() {
                 }
               />
 
-              <button>🗑️</button>
+              <button onClick={deleteChannel} className="ch-button">
+                {" - "}
+              </button>
             </div>
           ) : (
             <>
@@ -96,7 +103,7 @@ export default function Channel() {
         <div className="channel-gallery">
           {/* {currChannel.chType == "gc" ? "Channel Gallery" : "Chat Gallery"} */}
           <div className="channel-messages">
-            {channelMessages && channelMessages.length > 0
+            {currChannel && channelMessages && channelMessages.length > 0
               ? channelMessages.map((message) => {
                   return <Message message={message} />;
                 })

@@ -45,9 +45,9 @@ const createChannelAction = (channels) => ({
   payload: channels,
 });
 
-const updateChannelAction = (channels) => ({
+const updateChannelAction = (channel) => ({
   type: UPDATE_CHANNEL,
-  payload: channels,
+  payload: channel,
 });
 
 const postMessageAction = (message) => ({
@@ -55,9 +55,9 @@ const postMessageAction = (message) => ({
   payload: message,
 });
 
-const deleteChannelAction = (channelId) => ({
+const deleteChannelAction = () => ({
   type: DELETE_CHANNEL,
-  payload: channelId,
+  payload: "none",
 });
 
 const updateMessageAction = (message) => ({
@@ -159,9 +159,10 @@ export const updateChannelThunk = (channel, channelId) => async (dispatch) => {
   });
 
   if (res.ok) {
-    const channels = await res.json();
-    dispatch(updateChannelAction(channels.channels));
-    return channels.channels;
+    const update_channel = await res.json();
+    console.log("channels after res", update_channel);
+    dispatch(updateChannelAction(update_channel));
+    // return channels.channels;
   } else {
     return "create channel err";
   }
@@ -221,6 +222,7 @@ export const deleteChannelThunk = (channelId) => async (dispatch) => {
     const channelArr = channels["channels"];
     // console.log("messages", )
     dispatch(getChannelMessagesAction(channelArr));
+    dispatch(deleteChannelAction());
     return channelArr;
   } else {
     return "create channel err";
@@ -260,13 +262,18 @@ const channelReducer = (state = initialState, action) => {
       return newState;
     }
     case UPDATE_CHANNEL: {
-      const newState = { ...state, allChannels: [] };
-      newState.allChannels = action.payload;
+      const newState = {
+        ...state,
+        currChannel: { ...state.currChannel },
+      };
+      newState.currChannel = action.payload;
+      console.log("newState in update channel", newState);
       return newState;
     }
     case DELETE_CHANNEL: {
-      const newState = { ...state, allChannels: [], currChannel: {} };
-      newState.allChannels = action.payload;
+      const newState = { ...state, currChannel: {} };
+      newState.currChannel = {};
+      console.log("currchanel in delete channel", newState.currChannel);
       return newState;
     }
     case SELECT_CHAT: {

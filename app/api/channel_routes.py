@@ -111,7 +111,8 @@ def update_channel(channel_id):
     update_channel.title = form.data['title']
     update_channel.description = form.data['description']
     db.session.commit()
-    return  get_all_channels()
+    print('HELLLOHELLOHELLOHELOLOOOOOOOO', update_channel.to_dict())
+    return  update_channel.to_dict()
 
 @channel_routes.route('/messageupdate/<int:message_id>', methods=['POST'])
 def update_message(message_id):

@@ -3,7 +3,11 @@ import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./CreateChannelModal.css";
-import { createChannelThunk, updateChannelThunk } from "../../store/channel";
+import {
+  createChannelThunk,
+  loadChannel,
+  updateChannelThunk,
+} from "../../store/channel";
 
 function CreateChannelModal({ type, channelId }) {
   const dispatch = useDispatch();
@@ -22,6 +26,7 @@ function CreateChannelModal({ type, channelId }) {
     if (type === "create") {
       const data = await dispatch(createChannelThunk(newChannel));
     } else if (type === "update") {
+      console.log("update channel");
       const data = await dispatch(updateChannelThunk(newChannel, channelId));
     }
 
