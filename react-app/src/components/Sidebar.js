@@ -51,19 +51,19 @@ export default function Sidebar() {
                     selectChannel(channel);
                   }}
                 >
-                  {channel.title}
+                  {"#  " + channel.title}
                 </button>
               );
             } else return "";
           })}
-          <div id="create-channel-button">
+          <div className="create-channel-button">
             <OpenModalButton
-              className="create-channel-button"
-              buttonText="+"
+              buttonText="+ Add a Channel"
               modalComponent={<CreateChannelModal type="create" />}
             />
           </div>
         </div>
+
         <div className="sidebar-chat-section">
           <div className="sidebar-channel-section">
             <div> Chats</div>

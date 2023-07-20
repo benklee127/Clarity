@@ -29,5 +29,6 @@ class Message(db.Model):
                 'first_name': self.user.first_name,
                 'last_name': self.user.last_name,
                 'id': self.user.id,
+                'profile_photo': self.user.profile_photo,
             }
         }

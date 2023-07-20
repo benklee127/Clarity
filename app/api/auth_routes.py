@@ -69,7 +69,8 @@ def sign_up():
             email=form.data['email'],
             password=form.data['password'],
             first_name = form.data['first_name'],
-            last_name = form.data['last_name']
+            last_name = form.data['last_name'],
+            profile_photo = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDwaZlZw0qjZ8oQLoLROkHBjzN8ijOry2qQvRynkfjLd54Q19GaWk1jWJ-F4kBVS30w5g&usqp=CAU'
         )
         db.session.add(user)
         db.session.commit()
