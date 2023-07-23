@@ -18,7 +18,7 @@ class Channel(db.Model):
     user = db.relationship("User", back_populates="channels")
     messages = db.relationship("Message", back_populates="channels")
 
-    userchannels = db.relationship("User", secondary='user_channels')
+    userchannels = db.relationship("User", secondary='user_channels', back_populates='userchannels')
 
     def to_dict(self):
         return {
