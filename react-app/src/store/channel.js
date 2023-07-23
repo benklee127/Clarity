@@ -221,7 +221,7 @@ export const deleteMessageThunk =
   };
 
 export const deleteChannelThunk = (channelId) => async (dispatch) => {
-  const res = await fetch(`/api/channels/deletechannel/${channelId}`);
+  const res = await fetch(`/api/channels/delchannel/${channelId}`);
   if (res.ok) {
     const channels = await res.json();
     const channelArr = channels["channels"];
