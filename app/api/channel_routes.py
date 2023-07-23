@@ -144,8 +144,9 @@ def delete_message(message_id,channel_id):
         db.session.commit()
     return get_channel_posts(channel_id)
 
-@channel_routes.route('/deletechannel/<int:channel_id>')
+@channel_routes.route('/delchannel/<int:channel_id>')
 def delete_channel(channel_id):
+    print('delete Channel with channel id in route',channel_id)
     channel_to_delete = Channel.query.get(channel_id)
     # if channel_to_delete.user.id ==current_user.id:
     db.session.delete(channel_to_delete)
