@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
     channels = db.relationship("Channel", back_populates="user", cascade="delete, merge, save-update")
     messages = db.relationship("Message", back_populates="user", cascade='delete, merge, save-update')
 
-    userchannels = db.relationship("Channel", secondary='user_channels')
+    userchannels = db.relationship("Channel", secondary='user_channels', back_populates='userchannels')
 
     @property
     def password(self):
