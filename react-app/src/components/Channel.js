@@ -212,11 +212,19 @@ export default function Channel(currChannelProp) {
         <div className="channel-gallery">
           {/* {currChannel.chType == "gc" ? "Channel Gallery" : "Chat Gallery"} */}
           <div className="channel-messages">
-            {currChannel && channelMessages && channelMessages.length > 0
-              ? channelMessages.map((message) => {
-                  return <Message message={message} />;
-                })
-              : ""}
+            {currChannel && channelMessages && channelMessages.length > 0 ? (
+              channelMessages.map((message) => {
+                return <Message message={message} />;
+              })
+            ) : currChannel.id ? (
+              <div className="channel-help">
+                Be the first to send a message!
+              </div>
+            ) : (
+              <div className="channel-help">
+                Select a channel to get started!
+              </div>
+            )}
             <div ref={bottomRef} />
           </div>
         </div>
@@ -230,15 +238,31 @@ export default function Channel(currChannelProp) {
               minLength={1}
               maxLength={500}
               onChange={(e) => setContent(e.target.value)}
+              placeholder={
+                currChannel.id
+                  ? "Message " +
+                    (otherUser ? otherUser.first_name : "#" + currChannel.title)
+                  : "Select a channel to get started!"
+              }
             >
               text
             </textarea>
-            <button type="submit" className="message-form-button">
-              <div className="ch-title">
-                &nbsp;
-                <i class="fa-solid fa-paper-plane">&nbsp;</i>&nbsp;
+            <div className="form-bot-banner">
+              <div
+                className={
+                  "char-counter" + (content.length >= 500 ? "-max" : "")
+                }
+              >
+                {" "}
+                {content.length + "/500"}
               </div>
-            </button>
+              <button type="submit" className="message-form-button">
+                <div className="ch-title">
+                  &nbsp;
+                  <i class="fa-solid fa-paper-plane">&nbsp;</i>&nbsp;
+                </div>
+              </button>
+            </div>
           </form>
         </div>
       </div>
