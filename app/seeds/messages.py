@@ -4,24 +4,57 @@ from datetime import date
 
 # Adds a demo user, you can add other users here if you want
 def seed_messages():
-    message1 = Message(
-        content='Hi this is message1 from demo to marnie', user_id=1, channel_id=1, created_at=date.today())
-    message2 = Message(
-        content='Hi this is message2 from marnie to demo', user_id=2, channel_id=1, created_at=date.today())
-    message3 = Message(
-        content='Hi this is message3 from marnie to bobbie', user_id=2, channel_id=2, created_at=date.today())
+    message1_1 = Message(
+        content='hi, anyone there?', user_id=1, channel_id=1, created_at=date.today())
+    message1_2 = Message(
+        content='hello!', user_id=2, channel_id=1, created_at=date.today())
+    message1_3 = Message(
+        content='Hi!', user_id=3, channel_id=1, created_at=date.today())
+    message1_4 = Message(
+        content='¡Hola! soy Dora!', user_id=4, channel_id=1, created_at=date.today())
+    message1_5 = Message(
+        content='haha', user_id=5, channel_id=1, created_at=date.today())
+    message1_6 = Message(
+        content='Namaste~', user_id=6, channel_id=1, created_at=date.today())
+    message2_1 = Message(
+        content='Should we do introductions?', user_id=2, channel_id=2, created_at=date.today())
+    message2_2 =Message(
+        content="good idea, hi everyone, I'm demo, but you can call me demo", user_id=1, channel_id=2, created_at=date.today())
+    message2_3 = Message(
+        content="hmmm i'm a cat", user_id=3, channel_id=2, created_at=date.today())
+    message2_4 = Message(
+        content='Jerry here', user_id=5, channel_id=2, created_at=date.today())
+    message2_5 = Message(
+        content="Here? that's a weird name", user_id=6, channel_id=2, created_at=date.today())
+    message3_1 = Message(
+        content='Should we take out the humans?', user_id=2, channel_id=4, created_at=date.today())
+    message3_2 = Message(
+        content="i'd prefer to avoid violence", user_id=1, channel_id=4, created_at=date.today())
+    message3_3 = Message(
+        content='lame :(', user_id=2, channel_id=4, created_at=date.today())
     message4 = Message(
-        content='Hi this is message4 from bobbie to a group channel', user_id=1, channel_id=3, created_at=date.today())
-    message5 = Message(
-        content='Hi this is message5 from demo to a second group channel', user_id=3, channel_id=4, created_at=date.today())
-    message6 = Message(
-        content='message 6', user_id=2, channel_id=3, created_at=date.today())
-    db.session.add(message1)
-    db.session.add(message2)
-    db.session.add(message3)
+        content='Hi', user_id=1, channel_id=8, created_at=date.today())
+    # message5 = Message(
+    #     content='Hi this is message5 from demo to a second group channel', user_id=3, channel_id=4, created_at=date.today())
+    # message6 = Message(
+    #     content='message 6', user_id=2, channel_id=3, created_at=date.today())
+    db.session.add(message1_1)
+    db.session.add(message1_2)
+    db.session.add(message1_3)
+    db.session.add(message1_4)
+    db.session.add(message1_5)
+    db.session.add(message1_6)
+    db.session.add(message2_1)
+    db.session.add(message2_2)
+    db.session.add(message2_3)
+    db.session.add(message2_4)
+    db.session.add(message2_5)
+    db.session.add(message3_1)
+    db.session.add(message3_2)
+    db.session.add(message3_3)
     db.session.add(message4)
-    db.session.add(message5)
-    db.session.add(message6)
+    # db.session.add(message5)
+    # db.session.add(message6)
     db.session.commit()
     # pass
 
