@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
-
+import { login } from "../../store/session";
 function SignupFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -42,72 +42,87 @@ function SignupFormModal() {
     }
   };
 
+  const demoUser = () => {
+    dispatch(login("demo@aa.io", "password"));
+    closeModal();
+    return;
+  };
   return (
-    <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          First name
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Last name
+    <div className="auth-form-wrapper-signup">
+      <div className="auth-form-brand">
+        <i class="fa-brands fa-strava"></i>Clarity
+      </div>
+      <div className="auth-form-title">
+        <div>Sign up</div>
+      </div>
+      <div className="auth-form-input-wrapper">
+        <form onSubmit={handleSubmit} className="auth-form-input-wrapper">
+          <div className="auth-form-error">
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </div>
+          <div>
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Email"
+              className="auth-form-input"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              placeholder="First Name"
+              className="auth-form-input"
+            />
+          </div>
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
+            placeholder="Last Name"
+            className="auth-form-input"
           />
-        </label>
-        <label>
-          Username
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            placeholder="Username"
+            className="auth-form-input"
           />
-        </label>
-        <label>
-          Password
+
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Password"
+            className="auth-form-input"
           />
-        </label>
-        <label>
-          Confirm Password
+
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            placeholder="Confirm Password"
+            className="auth-form-input"
           />
-        </label>
-        <button type="submit">Sign Up</button>
-      </form>
-    </>
+
+          <button type="submit" className="auth-form-button">
+            Sign Up
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

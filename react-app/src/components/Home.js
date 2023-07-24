@@ -9,7 +9,8 @@ import LoginFormModal from "./LoginFormModal";
 import { logout } from "../store/session";
 import { useDispatch } from "react-redux";
 import SignupFormModal from "./SignupFormModal";
-import { login  } from "../store/session";
+import { login } from "../store/session";
+import homebackground from "../assets/homebackground.png";
 
 export default function Home({ isLoaded }) {
   const currentUser = useSelector((state) => state.session.user);
@@ -38,11 +39,14 @@ export default function Home({ isLoaded }) {
   } else {
     return (
       <div className="dh-wrapper">
-        <div className="dh-topbar">Sign in | Clarity</div>
+        <div className="dh-topbar">
+          <i class="fa-brands fa-strava"> </i>&nbsp; Sign in | Clarity
+        </div>
+
         <div className="dh-main-wrapper">
           <div className="dh-main">
             <div>
-              <i class="fa-solid fa-user-astronaut"></i> Clarity
+              <i class="fa-brands fa-strava"></i> Clarity
             </div>
             <div>Clarity brings the team together wherever you are</div>
             <OpenModalButton
@@ -55,7 +59,9 @@ export default function Home({ isLoaded }) {
             />
             <button onClick={demoUser}>Demo user</button>
           </div>
-          <div className="dh-main-image">background image</div>
+          <div className="dh-main-image">
+            <img src={homebackground} className="homebackground" />
+          </div>
         </div>
       </div>
     );

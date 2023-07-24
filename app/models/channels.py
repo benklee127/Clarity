@@ -14,6 +14,7 @@ class Channel(db.Model):
     icon = db.Column(db.String(255)) #icon to show for group channels
     privacyType = db.Column(db.String(255)) #post capstone implementation
     key = db.Column(db.String(50)) #key for dm channels
+    created_at = db.Column(db.DateTime)
 
     user = db.relationship("User", back_populates="channels")
     messages = db.relationship("Message", back_populates="channels")
@@ -28,5 +29,6 @@ class Channel(db.Model):
             'user_id': self.user_id,
             'description': self.description,
             'icon': self.icon,
-            'key': self.key
+            'key': self.key,
+            'created_at' : self.created_at
         }
