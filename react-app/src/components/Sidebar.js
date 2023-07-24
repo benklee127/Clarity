@@ -35,9 +35,11 @@ export default function Sidebar() {
     <div>
       <div className="sidebar-wrapper">
         {/* sidebar Component */}
-        <div className="workspace-bar">Workspace Name</div>
+        <div className="workspace-bar">
+          <div className="sidebar-section-header">Workspace</div>
+        </div>
         <div className="sidebar-channel-section">
-          <div>Channels</div>
+          <div className="sidebar-section-header">Channels</div>
           {/* Channel List */}
           {allChannels.map((channel) => {
             // console.log("channel type", channel);
@@ -51,7 +53,7 @@ export default function Sidebar() {
                     selectChannel(channel);
                   }}
                 >
-                  {"#  " + channel.title}
+                  {"# " + channel.title}
                 </button>
               );
             } else return "";
@@ -66,7 +68,7 @@ export default function Sidebar() {
 
         <div className="sidebar-chat-section">
           <div className="sidebar-channel-section">
-            <div> Chats</div>
+            <div className="sidebar-section-header">Chats</div>
             {allUsers.map((user) => {
               console.log("map function run once for ", user);
               if (!sessionUser) return "";

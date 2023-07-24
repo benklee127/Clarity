@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import "./Navigation.css";
 
 function ProfileButton({ user }) {
+  const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -39,17 +41,23 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <div onClick={openMenu} className="profile-button">
+        {sessionUser.profile_photo ? (
+          <img src={sessionUser.profile_photo} />
+        ) : (
+          <i className="fas fa-user-circle" />
+        )}
+      </div>
+      <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
+            <div className="profile-menu-item">{user.username}</div>
+            <div className="profile-menu-item">{user.email}</div>
+            <div className="profile-menu-item">
+              <div onClick={handleLogout} className="profile-menu-button">
+                Log Out
+              </div>
+            </div>
           </>
         ) : (
           <>
@@ -66,7 +74,7 @@ function ProfileButton({ user }) {
             />
           </>
         )}
-      </ul>
+      </div>
     </>
   );
 }

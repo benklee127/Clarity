@@ -5,6 +5,7 @@ import MessageForm from "./MessageForm";
 import Message from "./Message";
 import { postMessageThunk } from "../store/channel";
 import OpenModalButton from "./OpenModalButton";
+import { OpenModalDiv } from "./OpenModalButton";
 import CreateChannelModal from "./CreateChannelModal";
 
 export default function Channel(currChannelProp) {
@@ -37,7 +38,7 @@ export default function Channel(currChannelProp) {
 
   const postMessage = async (e) => {
     e.preventDefault();
-    if (content.length > 0) {
+    if (content.length > 0 && currChannel) {
       setSubmitContent(content);
       let newMessage = {
         content: content,
@@ -58,7 +59,7 @@ export default function Channel(currChannelProp) {
     console.log("currChannel", currChannel);
     chKey = currChannel.key;
   }
-  
+
   let otherUser;
   if (chKey) {
     let ids = chKey.split("_");
@@ -71,6 +72,7 @@ export default function Channel(currChannelProp) {
     otherUser = allUsers[otherUserId];
   }
 
+  const owner = currChannel.user_id == sessionUser.id;
   return (
     <div className="channel-wrapper">
       {/* Channel Component */}
@@ -78,10 +80,41 @@ export default function Channel(currChannelProp) {
         <div className="channel-header">
           {currChannel.chType == "gc" ? (
             <div className="channel-header-wrapper">
-              <div className="ch-title"> # {currChannel.title}</div>
-              <div className="ch-desc">{currChannel.description}</div>
-              <OpenModalButton
-                buttonText="+"
+              <div className="ch-header-section">
+                <OpenModalDiv
+                  buttonText={
+                    <div className="ch-title">
+                      {" "}
+                      {"# "}
+                      {currChannel.title}
+                    </div>
+                  }
+                  modalComponent={
+                    <CreateChannelModal
+                      type="update"
+                      channelId={currChannel.id}
+                    />
+                  }
+                />
+                <OpenModalDiv
+                  buttonText={
+                    <div className="ch-desc">
+                      {currChannel.description.length > 50
+                        ? currChannel.description.substring(0, 70) + "..."
+                        : currChannel.description}
+                    </div>
+                  }
+                  modalComponent={
+                    <CreateChannelModal
+                      type="update"
+                      channelId={currChannel.id}
+                    />
+                  }
+                />
+              </div>
+
+              {/* <OpenModalButton
+                buttonText={<div>test</div>}
                 className="ch-button"
                 modalComponent={
                   <CreateChannelModal
@@ -89,19 +122,65 @@ export default function Channel(currChannelProp) {
                     channelId={currChannel.id}
                   />
                 }
-              />
-
-              <button onClick={deleteChannel} className="ch-button">
-                {" - "}
-              </button>
+              /> */}
+              <div className="ch-header-section">
+                {owner ? (
+                  <>
+                    <OpenModalDiv
+                      buttonText={
+                        <div className="ch-title">
+                          &nbsp;
+                          <i class="fa-regular fa-pen-to-square">&nbsp;</i>
+                        </div>
+                      }
+                      modalComponent={
+                        <CreateChannelModal
+                          type="update"
+                          channelId={currChannel.id}
+                        />
+                      }
+                    />
+                    <div onClick={deleteChannel} className="ch-title">
+                      &nbsp;<i class="fa-solid fa-trash-can">&nbsp;</i>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           ) : (
             <>
-              <div>
+              {currChannel != {} ? (
+                <div className="dm-header-wrapper">
+                  {otherUser ? (
+                    <div className="dm-header">
+                      <div className="dm-header-photo-div">
+                        <img
+                          src={otherUser.profile_photo}
+                          className="dm-header-photo"
+                        />
+                      </div>
+                      <div className="dm-header-name">
+                        {" "}
+                        &nbsp;
+                        {otherUser
+                          ? otherUser.first_name + " " + otherUser.last_name
+                          : ""}
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ) : (
+                "Select or Create a channel to get started"
+              )}
+              {/* <div>
                 {otherUser
                   ? otherUser.first_name + " " + otherUser.last_name
                   : ""}
-              </div>
+              </div> */}
             </>
           )}
         </div>
@@ -129,8 +208,11 @@ export default function Channel(currChannelProp) {
             >
               text
             </textarea>
-            <button type="submit" className="message-submit">
-              Submit
+            <button type="submit" className="message-form-button">
+              <div className="ch-title">
+                &nbsp;
+                <i class="fa-solid fa-paper-plane">&nbsp;</i>&nbsp;
+              </div>
             </button>
           </form>
         </div>

@@ -6,16 +6,13 @@ import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
+  const currChannel = useSelector((state) => state.channels.currChannel);
 
   return (
     <div className="navbar-wrapper">
-      {/* <li>
-          <NavLink exact to="/">
-            Home
-          </NavLink>
-        </li> */}
-      <div></div>
-      <div></div>
+      <div className="home-topbar">
+        <i class="fa-brands fa-strava"> </i>&nbsp;Clarity
+      </div>
       <div className="prof-button-wrapper">
         {<ProfileButton user={sessionUser} />}
       </div>

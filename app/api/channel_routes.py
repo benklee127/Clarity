@@ -110,7 +110,7 @@ def create_channel():
     print('form data', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], chType='gc')
+        new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], chType='gc', created_at = datetime.now())
         db.session.add(new_channel)
         db.session.commit()
         return get_all_channels()
