@@ -7,6 +7,7 @@ import { postMessageThunk } from "../store/channel";
 import OpenModalButton from "./OpenModalButton";
 import { OpenModalDiv } from "./OpenModalButton";
 import CreateChannelModal from "./CreateChannelModal";
+import DMChannelModal from "./DMChannelModal";
 
 export default function Channel(currChannelProp) {
   const currChannel = useSelector((state) => state.channels.currChannel);
@@ -155,19 +156,43 @@ export default function Channel(currChannelProp) {
                 <div className="dm-header-wrapper">
                   {otherUser ? (
                     <div className="dm-header">
-                      <div className="dm-header-photo-div">
-                        <img
-                          src={otherUser.profile_photo}
-                          className="dm-header-photo"
-                        />
-                      </div>
-                      <div className="dm-header-name">
-                        {" "}
-                        &nbsp;
-                        {otherUser
-                          ? otherUser.first_name + " " + otherUser.last_name
-                          : ""}
-                      </div>
+                      <OpenModalDiv
+                        buttonText={
+                          <div className="dm-header">
+                            <div className="dm-header-photo-div">
+                              <img
+                                src={otherUser.profile_photo}
+                                className="dm-header-photo"
+                              />
+                            </div>
+                            <div className="ch-title">
+                              {" "}
+                              &nbsp;
+                              {otherUser
+                                ? otherUser.first_name +
+                                  " " +
+                                  otherUser.last_name
+                                : ""}
+                            </div>
+
+                            <div className="ch-desc">
+                              {currChannel.description
+                                ? currChannel.description
+                                : "set a topic"}
+                            </div>
+                            <div className="ch-title">
+                              &nbsp;
+                              <i class="fa-regular fa-pen-to-square">&nbsp;</i>
+                            </div>
+                          </div>
+                        }
+                        modalComponent={
+                          <DMChannelModal
+                            otherUser={otherUser}
+                            channelId={currChannel.id}
+                          />
+                        }
+                      />
                     </div>
                   ) : (
                     ""
