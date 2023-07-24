@@ -13,6 +13,11 @@ function CreateChannelModal({ type, channelId }) {
   const dispatch = useDispatch();
   const currChannel = useSelector((state) => state.channels.currChannel);
   const sessionUser = useSelector((state) => state.session.user);
+  const allChannels = useSelector((state) => state.channels.allChannels);
+
+  console.log("allChannelArr", allChannels);
+  const channelTitles = allChannels.map((channel) => channel.title);
+  console.log("allChannel title", channelTitles);
   const creatorId = currChannel.user_id;
   console.log("type", type);
   const [title, setTitle] = useState(type == "create" ? "" : currChannel.title);
@@ -33,6 +38,15 @@ function CreateChannelModal({ type, channelId }) {
       description: description,
     };
     let data;
+    if (title.length < 3) {
+      setErrors([...errors, "Title must be at least 3 characters"]);
+      return;
+    }
+    if (title != currChannel.title && channelTitles.includes(title)) {
+      setErrors([...errors, "Title must be unique"]);
+      return;
+    }
+
     if (type === "create") {
       data = await dispatch(createChannelThunk(newChannel));
       closeModal();
@@ -50,20 +64,28 @@ function CreateChannelModal({ type, channelId }) {
   console.log("currChannel", currChannel.title);
 
   const discardChanges = () => {
+    setErrors([]);
     setEditTitle(false);
     setEditDesc(false);
   };
 
   const cancelCreate = () => {
+    setErrors([]);
     closeModal();
   };
 
   const toggleEditTitle = () => {
-    if (owner) setEditTitle(true);
+    if (owner) {
+      setErrors([]);
+      setEditTitle(true);
+    }
   };
 
   const toggleEditDesc = () => {
-    if (owner) setEditDesc(true);
+    if (owner) {
+      setErrors([]);
+      setEditDesc(true);
+    }
   };
 
   const owner = currChannel.user_id == sessionUser.id;
@@ -123,8 +145,8 @@ function CreateChannelModal({ type, channelId }) {
           <div onSubmit={handleSubmit} className="channel-form">
             {errors.length > 0 ? (
               <ul>
-                {errors.map((error, idx) => (
-                  <li key={idx}>{error}</li>
+                {errors.map((error) => (
+                  <li className="auth-form-error">{error}</li>
                 ))}
               </ul>
             ) : (
@@ -136,7 +158,8 @@ function CreateChannelModal({ type, channelId }) {
                 {editTitle ? (
                   <div
                     className={
-                      "char-counter" + (title.length >= 20 ? "-max" : "")
+                      "char-counter" +
+                      (title.length >= 20 || title.length <= 2 ? "-max" : "")
                     }
                   >
                     {" "}
