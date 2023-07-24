@@ -121,8 +121,13 @@
     border-top: 0.5px solid rgb(151, 107, 107);
 }
 
+.channel-help {
+    padding: 15px;
+    color: rgb(203, 186, 186);
+}
+
 .channel-messages {
-    padding-top: 6px;
+    padding: 10px;
 }
 .channel-message {
 
@@ -130,6 +135,12 @@
     border-top: 0.5px solid rgb(151, 107, 107);
 }
 
+.form-bot-banner {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 98%;
+}
 /* dm header css */
 
 .dm-header-wrapper {
@@ -191,6 +202,11 @@
 
 .message:hover .comment-button {
     display: flex;
+}
+
+.message:hover .comment-edit-button {
+    background-color: transparent;
+    border: transparent;
 }
 
 .message-header {

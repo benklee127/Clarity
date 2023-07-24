@@ -1,0 +1,21 @@
+.dm-profile-photo {
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 10px;
+}
+
+.dm-channel-card-header-wrapper {
+    background-color: rgb(102, 2, 2);
+    /* height: 150px; */
+  }
+  .dm-cc-header {
+    /* height:100%; */
+    padding-left: 32px;
+    padding-top: 30px;
+    padding-right: 30px;
+    background-color: rgb(102, 2, 2);
+    font-size: large;
+    color: white;
+    display:flex;
+    align-items: center;
+  }

@@ -7,6 +7,7 @@ import { postMessageThunk } from "../store/channel";
 import OpenModalButton from "./OpenModalButton";
 import { OpenModalDiv } from "./OpenModalButton";
 import CreateChannelModal from "./CreateChannelModal";
+import DMChannelModal from "./DMChannelModal";
 
 export default function Channel(currChannelProp) {
   const currChannel = useSelector((state) => state.channels.currChannel);
@@ -155,19 +156,43 @@ export default function Channel(currChannelProp) {
                 <div className="dm-header-wrapper">
                   {otherUser ? (
                     <div className="dm-header">
-                      <div className="dm-header-photo-div">
-                        <img
-                          src={otherUser.profile_photo}
-                          className="dm-header-photo"
-                        />
-                      </div>
-                      <div className="dm-header-name">
-                        {" "}
-                        &nbsp;
-                        {otherUser
-                          ? otherUser.first_name + " " + otherUser.last_name
-                          : ""}
-                      </div>
+                      <OpenModalDiv
+                        buttonText={
+                          <div className="dm-header">
+                            <div className="dm-header-photo-div">
+                              <img
+                                src={otherUser.profile_photo}
+                                className="dm-header-photo"
+                              />
+                            </div>
+                            <div className="ch-title">
+                              {" "}
+                              &nbsp;
+                              {otherUser
+                                ? otherUser.first_name +
+                                  " " +
+                                  otherUser.last_name
+                                : ""}
+                            </div>
+
+                            <div className="ch-desc">
+                              {currChannel.description
+                                ? currChannel.description
+                                : "set a topic"}
+                            </div>
+                            <div className="ch-title">
+                              &nbsp;
+                              <i class="fa-regular fa-pen-to-square">&nbsp;</i>
+                            </div>
+                          </div>
+                        }
+                        modalComponent={
+                          <DMChannelModal
+                            otherUser={otherUser}
+                            channelId={currChannel.id}
+                          />
+                        }
+                      />
                     </div>
                   ) : (
                     ""
@@ -187,11 +212,19 @@ export default function Channel(currChannelProp) {
         <div className="channel-gallery">
           {/* {currChannel.chType == "gc" ? "Channel Gallery" : "Chat Gallery"} */}
           <div className="channel-messages">
-            {currChannel && channelMessages && channelMessages.length > 0
-              ? channelMessages.map((message) => {
-                  return <Message message={message} />;
-                })
-              : ""}
+            {currChannel && channelMessages && channelMessages.length > 0 ? (
+              channelMessages.map((message) => {
+                return <Message message={message} />;
+              })
+            ) : currChannel.id ? (
+              <div className="channel-help">
+                Be the first to send a message!
+              </div>
+            ) : (
+              <div className="channel-help">
+                Select a channel to get started!
+              </div>
+            )}
             <div ref={bottomRef} />
           </div>
         </div>
@@ -205,15 +238,31 @@ export default function Channel(currChannelProp) {
               minLength={1}
               maxLength={500}
               onChange={(e) => setContent(e.target.value)}
+              placeholder={
+                currChannel.id
+                  ? "Message " +
+                    (otherUser ? otherUser.first_name : "#" + currChannel.title)
+                  : "Select a channel to get started!"
+              }
             >
               text
             </textarea>
-            <button type="submit" className="message-form-button">
-              <div className="ch-title">
-                &nbsp;
-                <i class="fa-solid fa-paper-plane">&nbsp;</i>&nbsp;
+            <div className="form-bot-banner">
+              <div
+                className={
+                  "char-counter" + (content.length >= 500 ? "-max" : "")
+                }
+              >
+                {" "}
+                {content.length + "/500"}
               </div>
-            </button>
+              <button type="submit" className="message-form-button">
+                <div className="ch-title">
+                  &nbsp;
+                  <i class="fa-solid fa-paper-plane">&nbsp;</i>&nbsp;
+                </div>
+              </button>
+            </div>
           </form>
         </div>
       </div>

@@ -71,8 +71,12 @@ export default function Message({ message }) {
           </div>
           {message.user_id === sessionUser.id ? (
             <div className="comment-button">
-              <button onClick={toggleEdit}>Edit</button>
-              <button onClick={handleDelete}>Delete</button>
+              <button onClick={toggleEdit} className="comment-edit-button">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button onClick={handleDelete} className="comment-edit-button">
+                <i class="fa-solid fa-trash-can">&nbsp;</i>
+              </button>
             </div>
           ) : (
             ""
