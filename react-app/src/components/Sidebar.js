@@ -74,6 +74,7 @@ export default function Sidebar() {
               if (!sessionUser) return "";
               if (user.id == sessionUser.id) return "";
               let key = "";
+              console.log('target: ', user.id, 'curr when sidebarbutton', sessionUser.id);
               if (sessionUser.id < user.id)
                 key = sessionUser.id + "_" + user.id;
               else key = user.id + "_" + sessionUser.id;
@@ -82,7 +83,7 @@ export default function Sidebar() {
                   className="channel-button"
                   key={"dm-id-" + user.id}
                   onClick={() => {
-                    selectChannel(user, sessionUser.id + "_" + user.id);
+                    selectChannel(user, key);
                   }}
                 >
                   {user.first_name}

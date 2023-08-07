@@ -11,8 +11,11 @@ from .api.channel_routes import channel_routes
 from .api.message_routes import message_routes
 from .seeds import seed_commands
 from .config import Config
+from .socket import socketio
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
+
+
 
 # Setup login manager
 login = LoginManager(app)
@@ -34,6 +37,10 @@ app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(message_routes, url_prefix='/api/messages')
 db.init_app(app)
 Migrate(app, db)
+
+socketio.init_app(app)
+if __name__ == "__main__":
+    socketio.run(app)
 
 # Application Security
 CORS(app)

@@ -123,13 +123,13 @@ def update_channel(channel_id):
     update_channel.title = form.data['title']
     update_channel.description = form.data['description']
     db.session.commit()
-    print('HELLLOHELLOHELLOHELOLOOOOOOOO', update_channel.to_dict())
+    # print('HELLLOHELLOHELLOHELOLOOOOOOOO', update_channel.to_dict())
     return  update_channel.to_dict()
 
 @channel_routes.route('/messageupdate/<int:message_id>', methods=['POST'])
 def update_message(message_id):
     form = MessageForm()
-    print("HELLOHELLOHELLOHELHOELHEOHOEHOEHOEOHEHLEHLEh", form.data['content'])
+    # print("HELLOHELLOHELLOHELHOELHEOHOEHOEHOEOHEHLEHLEh", form.data['content'])
     update_message = Message.query.get(message_id)
     update_message.content = form.data["content"]
     db.session.commit()
@@ -146,7 +146,7 @@ def delete_message(message_id,channel_id):
 
 @channel_routes.route('/delchannel/<int:channel_id>')
 def delete_channel(channel_id):
-    print('delete Channel with channel id in route',channel_id)
+    # print('delete Channel with channel id in route',channel_id)
     channel_to_delete = Channel.query.get(channel_id)
     # if channel_to_delete.user.id ==current_user.id:
     db.session.delete(channel_to_delete)
