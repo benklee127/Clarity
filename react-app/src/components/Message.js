@@ -6,9 +6,9 @@ import {
   getChannelMessages,
   updateMessageThunk,
 } from "../store/channel";
-import MessageForm from "./MessageForm";
-import { postMessageThunk } from "../store/channel";
-import OpenModalButton from "./OpenModalButton";
+// import MessageForm from "./MessageForm";
+// import { postMessageThunk } from "../store/channel";
+// import OpenModalButton from "./OpenModalButton";
 
 export default function Message({ message }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -21,7 +21,7 @@ export default function Message({ message }) {
   );
   const [showEditForm, setShowEditForm] = useState(false);
   const dispatch = useDispatch();
-  console.log("message in ", message);
+  // console.log("message in ", message);
 
   useEffect(() => {}, [newContent]);
 
@@ -42,7 +42,7 @@ export default function Message({ message }) {
     const data = await dispatch(deleteMessageThunk(message.id, currChannel.id));
   };
   const toggleEdit = () => {
-    console.log("toggle attempt", showEditForm);
+    // console.log("toggle attempt", showEditForm);
     setShowEditForm(!showEditForm);
   };
   // const openEdit = () => {

@@ -8,6 +8,8 @@ import OpenModalButton from "./OpenModalButton";
 import { OpenModalDiv } from "./OpenModalButton";
 import CreateChannelModal from "./CreateChannelModal";
 import DMChannelModal from "./DMChannelModal";
+import {io} from 'socket.io-client'
+let socket;
 
 export default function Channel(currChannelProp) {
   const currChannel = useSelector((state) => state.channels.currChannel);
@@ -28,6 +30,22 @@ export default function Channel(currChannelProp) {
     console.log("use effect run currchan", currChannel);
     if (currChannel != {} && currChannel != undefined)
       dispatch(getChannelMessages(currChannel.id));
+
+    //open socket
+    socket = io()
+    console.log('connected to socket');
+    //get messages
+    socket.on("chat", (message) => {
+      console.log('chat socket triggered');
+       let res = dispatch(getChannelMessages(currChannel.id))
+       console.log('res', res);
+   })
+
+   return (()=>{
+    console.log('socket disconnected');
+    socket.disconnect()
+   })
+
   }, [currChannel, submitContent, channelDeleted, allChannels]);
 
   const deleteChannel = async (e) => {
@@ -47,8 +65,9 @@ export default function Channel(currChannelProp) {
         channel_id: currChannel.id,
       };
       console.log("new message", newMessage);
-      const data = await dispatch(postMessageThunk(newMessage));
+      // const data = await dispatch(postMessageThunk(newMessage));
       dispatch(getChannelMessages(currChannel.id));
+      socket.emit("chat", newMessage)
       setContent("");
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
@@ -71,6 +90,8 @@ export default function Channel(currChannelProp) {
     console.log("other user", allUsers[otherUserId]);
 
     otherUser = allUsers[otherUserId];
+    console.log('chKey after other user', chKey, 'other', otherUserId);
+
   }
 
   const owner = currChannel.user_id == sessionUser.id;
