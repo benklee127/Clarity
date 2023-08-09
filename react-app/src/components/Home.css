@@ -2,7 +2,7 @@
 .home-wrapper {
     display: flex;
     flex-wrap: row;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 }
 
 .navbar-wrapper {
@@ -12,7 +12,7 @@
 }
 
 
-.main-wrapper{
+.main-wrapper {
     display: flex;
     flex-direction: row;
     width: 100vw;
@@ -23,15 +23,15 @@
     width: 20vw;
     height: 93vh;
     background-color: rgb(102, 2, 2);
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
-.workspace-bar{
+.workspace-bar {
     height: 30px;
     display: flex;
     align-items: center;
     padding-top: 10px;
-    padding-left:20px;
+    padding-left: 20px;
     padding-bottom: 10px;
     color: rgb(231, 226, 226);
 }
@@ -63,7 +63,7 @@
 } */
 
 /* sidebar css */
-.create-channel-button > button{
+.create-channel-button>button {
     background-color: rgb(102, 2, 2);
     text-align: left;
 }
@@ -108,8 +108,9 @@
     justify-content: space-between;
     padding-left: 5px;
 }
+
 .ch-header-section {
-    display:flex;
+    display: flex;
     align-items: baseline;
     padding: 10px;
 }
@@ -129,6 +130,7 @@
 .channel-messages {
     padding: 10px;
 }
+
 .channel-message {
 
     height: 20vh;
@@ -136,20 +138,22 @@
 }
 
 .form-bot-banner {
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 98%;
 }
+
 /* dm header css */
 
 .dm-header-wrapper {
     height: 100%;
 }
+
 .dm-header {
     height: 100%;
     padding-left: 10px;
-    display:flex;
+    display: flex;
     display: row;
     align-items: center;
 
@@ -171,11 +175,11 @@
 /* messages */
 
 .message {
-    display:flex;
-    padding-top:6px;
+    display: flex;
+    padding-top: 6px;
     padding-bottom: 6px;
-    padding-left:10px;
-    min-height:  40px;
+    padding-left: 10px;
+    min-height: 40px;
     width: 80vw;
 }
 
@@ -192,7 +196,7 @@
     max-height: 40px;
 }
 
-.message:hover{
+.message:hover {
     background-color: rgb(203, 186, 186);
 }
 
@@ -211,14 +215,14 @@
 
 .message-header {
     font-weight: 600;
-    width:  80vw;
+    width: 80vw;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
 }
 
 .message-name-date-wrapper {
-    display:flex;
+    display: flex;
     flex-direction: row;
     align-content: flex-start;
 }
@@ -230,8 +234,8 @@
 }
 
 .message-column {
-    padding-left:  10px;
-    display:flex;
+    padding-left: 10px;
+    display: flex;
     width: 70vw;
     flex-wrap: wrap;
 }
@@ -243,7 +247,7 @@
     /* inline-size: 150px; */
 }
 
-.message-edit textarea{
+.message-edit textarea {
     width: 99%;
     height: 100%;
     margin: 5px;
@@ -271,6 +275,7 @@
     color: rgb(208, 189, 189);
     flex-wrap: nowrap;
 }
+
 .ch-button {
     padding-top: 2px;
     padding-bottom: 2px;
@@ -282,6 +287,7 @@
     flex-wrap: nowrap;
     font-size: medium;
 }
+
 .ch-button:hover {
     background-color: rgb(151, 107, 107);
     color: white;
@@ -300,10 +306,12 @@
     color: white;
     border: none;
 }
+
 .create-channel-button {
     width: 100%;
 }
-.create-channel-button button{
+
+.create-channel-button button {
     background-color: transparent;
     border: none;
     border-radius: 5px;
@@ -311,16 +319,18 @@
     font-weight: 100;
     width: 100%;
 }
+
 /* .create-channel-button button:hover{
     background-color: rgb(151, 107, 107);
     color: white;
     border: none;
 } */
 
-.create-channel-button button{
+.create-channel-button button {
     background-color: transparent;
     border: none;
 }
+
 .message-form {
     height: 25vh;
     display: flex;
@@ -333,12 +343,14 @@
     border: transparent;
     width: 100px;
 }
-.message-form-button >div{
+
+.message-form-button>div {
     background-color: transparent;
     border: transparent;
     font-size: x-large;
     color: rgb(92, 60, 60);
 }
+
 .message-form-content {
     width: 99%;
     height: 90%;
@@ -359,7 +371,7 @@
     background-color: rgb(60, 8, 8);
     color: lightgrey;
     font-size: small;
-    display:flex;
+    display: flex;
     align-items: center;
 
 }
@@ -367,7 +379,7 @@
 .dh-main-wrapper {
     display: flex;
     flex-direction: row;
-    width:100%;
+    width: 100%;
     height: 96vh;
     background-color: rgb(88, 20, 20);
 }
@@ -376,11 +388,12 @@
     width: 40vw;
     height: 100vh;
     overflow: hidden;
-    display:flex;
+    display: flex;
     align-items: flex-end;
     justify-content: flex-start;
     object-fit: fill;
 }
+
 .homebackground {
     height: 100vh;
     opacity: 0.7;
@@ -393,25 +406,26 @@
     color: white;
     font-size: 30px;
     font-weight: bold;
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
-.dh-main > div {
+.dh-main>div {
     padding-bottom: 30px;
 }
 
 .dh-main button {
-    background-color:  rgb(194, 154, 154);
+    background-color: rgb(194, 154, 154);
     border-radius: 5px;
     border-color: rgb(59, 36, 36);
     border-style: solid;
     border-width: 1px;
-    color:white;
-    font-weight:600;
+    color: white;
+    font-weight: 600;
     width: 200px;
     height: 40px;
 }
+
 .dh-main button:hover {
     background-color: rgb(206, 173, 173);
     color: white;
@@ -426,23 +440,23 @@
 ::-webkit-scrollbar {
     width: 10px;
     border-radius: 5px;
-  }
+}
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: rgb(245, 237, 237);
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
 
 
-  }
+}
 
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #674b4b;
     border-radius: 5px;
 
-  }
+}
 
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: #3c0c0c;
-  }
+}

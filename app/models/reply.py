@@ -1,8 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 
-class Message(db.Model):
-    __tablename__ = 'messages'
+class Reply(db.Model):
+    __tablename__ = 'replies'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -11,13 +11,13 @@ class Message(db.Model):
     content = db.Column(db.String(500), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     channel_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("channels.id")))
+    message_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("messages.id")))
     created_at = db.Column(db.DateTime, nullable=False)
     updated_at = db.Column(db.DateTime)
-    is_thread = db.Column(db.Boolean)
-    
-    user = db.relationship("User", back_populates="messages")
-    channels = db.relationship("Channel", back_populates="messages")
 
+    user = db.relationship("User", back_populates="replies")
+    channels = db.relationship("Channel", back_populates="replies")
+    message = db.relationship("Message", back_populates='replies')
 
     def to_dict(self):
         return {

@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 class Workspace(db.Model):
-    __tablename__ = 'Workspace'
+    __tablename__ = 'workspaces'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -11,12 +11,14 @@ class Workspace(db.Model):
     description = db.Column(db.String(500))
     icon = db.Column(db.String(255))
     privacyType = db.Column(db.String(255))
-
+    user_id = db.Column(db.Integer)
+    workspace_members = db.relationship("Workspace", secondary="user_workspaces", cascade="delete, merge, save-update", back_populates='workspace_members')
 
     def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
             'description': self.description,
+            'privacyType': self.privacyType,
             'icon': self.icon,
         }
