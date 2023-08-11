@@ -24,10 +24,24 @@ def create_chat(key):
     db.session.commit()
     return new_chat
 
+#update last channel
+def update_last_channel(channel_id):
+    user = User.query.get(current_user.id)
+    user.last_channel = channel_id
+    db.session.commit()
+    return 'last channel updated'
+
 #print list of channels
 @channel_routes.route('/')
 def get_channels():
     channels = Channel.query.filter(Channel.chType == 'gc').all()
+    return {'channels' : [channel.to_dict() for channel in channels]}
+
+#get list of channels by workspace
+@channel_routes.route('/workspace/<int:workspace_id>')
+def get_workspace_channels(workspace_id):
+    print('in route workspace')
+    channels = Channel.query.filter(Channel.workspace_id == workspace_id).all()
     return {'channels' : [channel.to_dict() for channel in channels]}
 
 @channel_routes.route('/chats')
@@ -72,7 +86,7 @@ def select_chat(key):
 
     #find chat by key
     chat  = Channel.query.filter(Channel.key == key)
-
+    update_last_channel(chat[0].id)
     if chat[0]:
         return chat[0].to_dict()
     else:
@@ -100,6 +114,8 @@ def post_message(channel_id):
 def join_channel(channel_id):
     user = User.query.get(current_user.id)
     channel =  Channel.query.get(channel_id)
+    if not user or not channel:
+        return 'workspace not found', 404
     user.userchannels.append(channel)
     return 'joined channel'
 

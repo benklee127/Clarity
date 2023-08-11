@@ -17,8 +17,10 @@ class Channel(db.Model):
     created_at = db.Column(db.DateTime)
     workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("workspaces.id")))
 
+    workspace = db.relationship("Workspace",  back_populates="channels")
     messages = db.relationship("Message", back_populates="channels")
     channel_members = db.relationship("User", secondary="user_channels", back_populates='channel_members')
+    replies = db.relationship("Reply", back_populates="channels")
 
     def to_dict(self):
         return {
@@ -29,5 +31,5 @@ class Channel(db.Model):
             'description': self.description,
             'icon': self.icon,
             'key': self.key,
-            'created_at' : self.created_at
+            'created_at' : self.created_at,
         }

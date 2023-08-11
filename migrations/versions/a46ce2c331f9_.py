@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ea3329cccd86
+Revision ID: a46ce2c331f9
 Revises: 
-Create Date: 2023-08-09 13:53:58.740111
+Create Date: 2023-08-11 11:17:33.376738
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ea3329cccd86'
+revision = 'a46ce2c331f9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,6 +28,8 @@ def upgrade():
     sa.Column('profile_photo', sa.String(length=255), nullable=True),
     sa.Column('display_name', sa.String(length=50), nullable=True),
     sa.Column('biography', sa.String(length=255), nullable=True),
+    sa.Column('last_workspace', sa.Integer(), nullable=True),
+    sa.Column('last_channel', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
@@ -39,6 +41,7 @@ def upgrade():
     sa.Column('icon', sa.String(length=255), nullable=True),
     sa.Column('privacyType', sa.String(length=255), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('channels',

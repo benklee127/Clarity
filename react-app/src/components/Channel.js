@@ -13,6 +13,7 @@ let socket;
 
 export default function Channel(currChannelProp) {
   const currChannel = useSelector((state) => state.channels.currChannel);
+  const currWorkspace = useSelector((state) => state.ch)
   const sessionUser = useSelector((state) => state.session.user);
   const allChannels = useSelector((state) => state.channels.allChannels);
   const bottomRef = useRef(null);
@@ -66,10 +67,10 @@ export default function Channel(currChannelProp) {
       };
       console.log("new message", newMessage);
       // const data = await dispatch(postMessageThunk(newMessage));
-      dispatch(getChannelMessages(currChannel.id));
+      let data = dispatch(getChannelMessages(currChannel.id));
       socket.emit("chat", newMessage)
       setContent("");
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      if (data){ bottomRef.current?.scrollIntoView({ behavior: "smooth" });}
     }
   };
   console.log("all users", allUsers);

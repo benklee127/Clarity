@@ -12,13 +12,16 @@ class Workspace(db.Model):
     icon = db.Column(db.String(255))
     privacyType = db.Column(db.String(255))
     user_id = db.Column(db.Integer)
-    workspace_members = db.relationship("Workspace", secondary="user_workspaces", cascade="delete, merge, save-update", back_populates='workspace_members')
+    created_at = db.Column(db.DateTime)
 
+    workspace_members = db.relationship("User", secondary="user_workspaces", back_populates='workspace_members')
+    channels = db.relationship("Channel", back_populates="workspace", cascade='delete, merge, save-update')
     def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
             'description': self.description,
             'privacyType': self.privacyType,
+            'user_id': self.user_id,
             'icon': self.icon,
         }

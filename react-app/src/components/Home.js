@@ -1,6 +1,6 @@
 import Sidebar from "./Sidebar";
 import Channel from "./Channel";
-import Navbar from "./Navbar";
+import WorkspaceBar from "./WorkspaceBar";
 import "./Home.css";
 import { useSelector } from "react-redux";
 import Navigation from "./Navigation";
@@ -11,10 +11,16 @@ import { useDispatch } from "react-redux";
 import SignupFormModal from "./SignupFormModal";
 import { login } from "../store/session";
 import homebackground from "../assets/homebackground.png";
+import { useEffect } from "react";
+import { getUserWorkspacesThunk, getWorkspacesThunk } from "../store/workspace";
+import { getAllChannelsThunk } from "../store/channel";
+
 
 export default function Home({ isLoaded }) {
   const currentUser = useSelector((state) => state.session.user);
   const currChannel = useSelector((state) => state.channels.currChannel);
+  const userWorkspaces = useSelector((state) => state.workspaces.userWorkspaces);
+  const allWorkspaces = useSelector((state) => state.workspaces.allWorkspaces);
   const dispatch = useDispatch();
 
   const handleLogout = (e) => {
@@ -22,18 +28,50 @@ export default function Home({ isLoaded }) {
     dispatch(logout());
   };
 
+  useEffect(() => {
+    dispatch(getUserWorkspacesThunk())
+    dispatch(getWorkspacesThunk())
+  }, [dispatch,currentUser])
+
   const demoUser = () => {
     return dispatch(login("demo@aa.io", "password"));
   };
-
-  if (currentUser) {
+  if (allWorkspaces.length < 1) return null;
+  if (currentUser ) {
     return (
       <div className="home-wrapper">
         <Navigation isLoaded={isLoaded} />
-        <div className="main-wrapper">
+        { userWorkspaces.length > 0 ?       <div className="main-wrapper">
+          <WorkspaceBar />
           <Sidebar />
           <Channel currChannelProp={currChannel} />
+        </div> :
+        <div className='join-workspace-page'>
+          <div className='join-workspace-brand'>
+            Clarity
+          </div>
+          <div className='join-workspace-cta'>
+            Choose a workspace
+          </div>
+          <div className='join-workspace-list'>
+            <div className='join-workspace-list-header'>Workspaces available</div>
+            {allWorkspaces.map((workspace) => {
+              console.log('test  run', workspace);
+              return (<div className='join-workspace-button'>
+                <div className='join-workspace-img'><img src={workspace.icon}/></div>
+                <div className='join-workspace-button-info'>
+                  <div className='join-ws-title'>{workspace.title}</div>
+                  {/* <div className='join-ws-members'></div> */}
+                </div>
+              </div>)
+            })}
+            <div className='join-workspace-button'>
+              Create a workspace
+            </div>
+            </div>
         </div>
+        }
+
       </div>
     );
   } else {

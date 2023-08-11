@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 from app.models import User
 
 user_routes = Blueprint('users', __name__)
@@ -13,6 +13,16 @@ def users():
     """
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
+
+@user_routes.route('/workspaces')
+@login_required
+def user_workspaces():
+    """
+    Query for all users and returns them in a list of user dictionaries
+    """
+    user = User.query.get(current_user.id)
+    user.workspace_members
+    return {'workspaces': [workplace.to_dict() for workplace in user.workspace_members]}
 
 
 @user_routes.route('/<int:id>')

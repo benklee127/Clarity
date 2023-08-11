@@ -32,11 +32,13 @@ class User(db.Model, UserMixin):
     profile_photo = db.Column(db.String(255))
     display_name = db.Column(db.String(50))
     biography = db.Column(db.String(255))
+    last_workspace = db.Column(db.Integer, default=-1)
+    last_channel = db.Column(db.Integer, default=-1)
 
     workspace_members = db.relationship("Workspace", secondary="user_workspaces", cascade="delete, merge, save-update", back_populates='workspace_members')
     channel_members = db.relationship("Channel", secondary="user_channels", back_populates='channel_members')
     messages = db.relationship("Message", back_populates="user", cascade='delete, merge, save-update')
-
+    replies = db.relationship("Reply", back_populates="user", cascade='delete, merge, save-update' )
     # userchannels = db.relationship("Channel", secondary='user_channels', back_populates='userchannels')
 
     @property
@@ -58,5 +60,7 @@ class User(db.Model, UserMixin):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'profile_photo': self.profile_photo,
-            'display_name': self.display_name
+            'display_name': self.display_name,
+            'last_workspace': self.last_workspace,
+            'last_channel': self.last_channel,
         }

@@ -14,9 +14,10 @@ class Message(db.Model):
     created_at = db.Column(db.DateTime, nullable=False)
     updated_at = db.Column(db.DateTime)
     is_thread = db.Column(db.Boolean)
-    
+
     user = db.relationship("User", back_populates="messages")
     channels = db.relationship("Channel", back_populates="messages")
+    replies = db.relationship("Reply", back_populates="messages")
 
 
     def to_dict(self):

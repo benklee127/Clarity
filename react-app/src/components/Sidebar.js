@@ -9,21 +9,24 @@ import OpenModalButton from "./OpenModalButton";
 import CreateChannelModal from "./CreateChannelModal";
 import LoginFormModal from "./LoginFormModal";
 import { getAllUsersThunk } from "../store/user";
+import { loadWorkspacesThunk } from "../store/workspace";
 
 export default function Sidebar() {
   const sessionUser = useSelector((state) => state.session.user);
   const allChannels = useSelector((state) => state.channels.allChannels);
   const allUsers = useSelector((state) => state.users.allUsers);
   const currChannel = useSelector((state) => state.channels.currChannel);
+  const currWorkspace = useSelector((state) => state.workspaces.currWorkspace)
   // console.log("user", sessionUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllChannelsThunk());
+    dispatch(getAllChannelsThunk(currWorkspace.id));
     dispatch(getAllUsersThunk());
-  }, [currChannel]);
-  if (allChannels.length < 1 || allUsers.length < 1) return null;
 
+  }, [currChannel,currWorkspace]);
+
+  if (allChannels.length < 1 || allUsers.length < 1) return null;
   const selectChannel = (channel, key) => {
     // console.log("selected channel ", channel.id, key);
     if (!key) dispatch(loadChannel(channel));
@@ -32,7 +35,7 @@ export default function Sidebar() {
 
   // console.log("allchannels", allChannels);
   return (
-    <div>
+
       <div className="sidebar-wrapper">
         {/* sidebar Component */}
         <div className="workspace-bar">
@@ -45,16 +48,17 @@ export default function Sidebar() {
             // console.log("channel type", channel);
             if (channel.chType === "gc") {
               console.log("map function run once for ", channel);
-              return (
-                <button
-                  className="channel-button"
-                  key={"ch-button-" + channel.id}
-                  onClick={() => {
-                    selectChannel(channel);
-                  }}
-                >
-                  {"# " + channel.title}
-                </button>
+              return (<div className="create-channel-button">
+                  <button
+
+                    key={"ch-button-" + channel.id}
+                    onClick={() => {
+                      selectChannel(channel);
+                    }}
+                  >
+                    {"# " + channel.title}
+                  </button>
+                </div>
               );
             } else return "";
           })}
@@ -93,6 +97,6 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-    </div>
+
   );
 }

@@ -14,6 +14,10 @@ def seed_channels():
     dm1_3 = Channel(chType='dm', key="1_3")
     dm1_4 = Channel(chType='dm', key="1_4")
     dm1_5 = Channel(chType='dm', key="1_5")
+
+    channel2_1 = Channel(chType='gc', title="welcome",description="welcome to our workspace! Say hi!", user_id=2, created_at=datetime.now(), workspace_id=2)
+    channel2_2 = Channel(chType='gc', title="general",description="groupchannel1 desc", user_id=1, created_at=datetime.now(), workspace_id=2)
+    channel2_3 = Channel(chType='gc', title="off-topic",description="off-topic discussions here!", user_id=1, created_at=datetime.now(), workspace_id=2)
     db.session.add(channel5) #1
     db.session.add(channel3)#2
     db.session.add(channel2)#3
@@ -24,6 +28,11 @@ def seed_channels():
     db.session.add(dm1_3)#8
     db.session.add(dm1_4)#9
     db.session.add(dm1_5)#10
+
+    db.session.add(channel2_1)#8
+    db.session.add(channel2_2)#9
+    db.session.add(channel2_3)#10
+
     db.session.commit()
     # pass
 
