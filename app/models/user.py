@@ -17,10 +17,15 @@ workspace_users = db.Table(
 )
 
 if environment == "production":
-    __table_args__ = {'schema': SCHEMA}
+    workspace_users.schema = SCHEMA
+if environment == "production":
+    channel_users.schema = SCHEMA
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
+
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
