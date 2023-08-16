@@ -28,7 +28,8 @@ Python, JavaScript, Flask, React, Redux, CSS, HTML, AWS
 
 
 ### Home View: 
-![image](https://github.com/benklee127/Clarity/assets/6230804/e11d7e1d-63e4-477d-902a-d456b214793e)
+![image](https://github.com/benklee127/Clarity/assets/6230804/d3947ee8-7202-48b2-bef9-de1df8b0985e)
+
 
 
 
