@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Channel, Message, db
+from app.models import User, Channel, Message, Reply, db
 from app.forms import MessageForm,ChannelForm
 from datetime import datetime
 from sqlalchemy import exists
@@ -60,11 +60,17 @@ def get_all_channels():
 def get_channel_id(channel_id):
     channel = Channel.query.get(channel_id)
     return channel.to_dict()
+#helper for replies
+def get_replies(message_id):
+    replies = Reply.query.filter(Reply.message_id == message_id).all()
+    return {'replies': [reply.to_dict() for reply in replies]}
 
 #get channel messages
 @channel_routes.route('/messages/<int:channel_id>')
 def get_channel_posts(channel_id):
     channel_messages = Message.query.filter(Message.channel_id == channel_id).all()
+    # for message in channel_messages:
+    #     message['replies'] = get_replies(message.id)
     return {'messages' : [message.to_dict() for message in channel_messages]}
 
 
@@ -130,6 +136,19 @@ def create_channel():
         db.session.add(new_channel)
         db.session.commit()
         return get_all_channels()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+#create a channel(group channel) with workspaceid
+@channel_routes.route('/createwsgc/<int:workspace_id>', methods=["POST"])
+def create_ws_channel(workspace_id):
+    form = ChannelForm()
+    print('form data', form.data)
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], chType='gc', created_at = datetime.now(), workspace_id=workspace_id)
+        db.session.add(new_channel)
+        db.session.commit()
+        return get_workspace_channels(workspace_id)
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @channel_routes.route('/update/<int:channel_id>', methods=["POST"])

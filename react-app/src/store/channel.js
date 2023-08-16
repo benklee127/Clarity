@@ -135,9 +135,9 @@ export const postMessageThunk = (message) => async (dispatch) => {
   }
 };
 
-export const createChannelThunk = (channel) => async (dispatch) => {
+export const createChannelThunk = (channel, workspace_id) => async (dispatch) => {
   console.log("channels thunk before res", channel);
-  const res = await fetch(`/api/channels/creategc`, {
+  const res = await fetch(`/api/channels/createwsgc/${workspace_id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(channel),

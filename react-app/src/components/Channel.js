@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteChannelThunk, getChannelMessages } from "../store/channel";
+import { deleteChannelThunk, getChannelMessages, loadChannel } from "../store/channel";
 import MessageForm from "./MessageForm";
 import Message from "./Message";
 import { postMessageThunk } from "../store/channel";
@@ -9,12 +9,15 @@ import { OpenModalDiv } from "./OpenModalButton";
 import CreateChannelModal from "./CreateChannelModal";
 import DMChannelModal from "./DMChannelModal";
 import {io} from 'socket.io-client'
+import Thread from "./Thread"
 let socket;
+
 
 export default function Channel(currChannelProp) {
   const currChannel = useSelector((state) => state.channels.currChannel);
   const currWorkspace = useSelector((state) => state.ch)
   const sessionUser = useSelector((state) => state.session.user);
+
   const allChannels = useSelector((state) => state.channels.allChannels);
   const bottomRef = useRef(null);
   const allUsers = useSelector((state) => state.users.allUsers);
@@ -26,12 +29,16 @@ export default function Channel(currChannelProp) {
   const [submitContent, setSubmitContent] = useState("content");
   const dispatch = useDispatch();
 
+  const [showThread, setShowThread] = useState(true)
+  const [threadId, setThreadId] = useState();
   useEffect(() => {
     // console.log("useeffect in channel ", currChannel.id);
     console.log("use effect run currchan", currChannel);
     if (currChannel != {} && currChannel != undefined)
       dispatch(getChannelMessages(currChannel.id));
-
+    else if (sessionUser.last_channel != -1){
+      dispatch(loadChannel(sessionUser.last_channel))
+    }
     //open socket
     socket = io()
     console.log('connected to socket');
@@ -99,7 +106,7 @@ export default function Channel(currChannelProp) {
   return (
     <div className="channel-wrapper">
       {/* Channel Component */}
-      <div className="channel-section">
+      <div className={"channel-section" + (!showThread ? "-split": "")}>
         <div className="channel-header">
           {currChannel.chType == "gc" ? (
             <div className="channel-header-wrapper">
@@ -236,7 +243,12 @@ export default function Channel(currChannelProp) {
           <div className="channel-messages">
             {currChannel && channelMessages && channelMessages.length > 0 ? (
               channelMessages.map((message) => {
-                return <Message message={message} />;
+                return <Message message={message}
+                showThread={showThread}
+                setShowThread={setShowThread}
+                threadId={threadId}
+                setThreadId={setThreadId}
+                />;
               })
             ) : currChannel.id ? (
               <div className="channel-help">
@@ -288,6 +300,9 @@ export default function Channel(currChannelProp) {
           </form>
         </div>
       </div>
+      { !showThread ?
+              <Thread showThread={showThread} setShowThread={setShowThread} threadId={threadId}/>
+       : ""}
     </div>
   );
 }

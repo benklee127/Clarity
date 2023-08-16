@@ -26,10 +26,24 @@
 
 }
 
-.workspace-item-img {
-    border-radius: 8px;
+.workspace-item-selected {
+    border: transparent solid;
+    border-radius: 10px;
     height: 35px;
     width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+    font-size: 16pt;
+    border: rgb(231, 204, 204) solid;
+
+}
+
+.workspace-item-img {
+    border-radius: 8px;
+    height: 30px;
+    width: 30px;
     display: flex;
     justify-content: center;
     align-items: center;

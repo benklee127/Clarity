@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
 from app.models import User
-
+from app.models import User, Channel, Message, db
 user_routes = Blueprint('users', __name__)
 
 
@@ -43,3 +43,11 @@ def get_all_users():
     """
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
+
+
+@user_routes.route('/lastWorkspace/<int:id>')
+def set_last_workspace(id):
+    user = User.query.get(current_user.id)
+    user.last_workspace = id
+    db.session.commit()
+    return

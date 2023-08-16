@@ -7,7 +7,7 @@ class Workspace(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
+    title = db.Column(db.String(50), nullable=False, unique=True)
     description = db.Column(db.String(500))
     icon = db.Column(db.String(255))
     privacyType = db.Column(db.String(255))

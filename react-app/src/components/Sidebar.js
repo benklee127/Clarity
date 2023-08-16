@@ -10,6 +10,9 @@ import CreateChannelModal from "./CreateChannelModal";
 import LoginFormModal from "./LoginFormModal";
 import { getAllUsersThunk } from "../store/user";
 import { loadWorkspacesThunk } from "../store/workspace";
+import { OpenModalDiv } from "./OpenModalButton";
+import CreateWorkspaceModal from "../components/CreateWorkspaceModal"
+import UpdateWorkspaceModal from "./UpdateWorkspaceModal";
 
 export default function Sidebar() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -39,10 +42,19 @@ export default function Sidebar() {
       <div className="sidebar-wrapper">
         {/* sidebar Component */}
         <div className="workspace-bar">
-          <div className="sidebar-section-header">Workspace</div>
+          <div className="workspace-button"><OpenModalDiv
+          buttonText=
+            {currWorkspace.title}
+          modalComponent={
+            <UpdateWorkspaceModal
+              type="update"
+
+            />
+          }
+        /> &nbsp;<i class="fa-solid fa-caret-down"></i></div>
         </div>
         <div className="sidebar-channel-section">
-          <div className="sidebar-section-header">Channels</div>
+          <div className="sidebar-section-header"><i class="fa-solid fa-caret-down"></i>&nbsp;&nbsp;Channels</div>
           {/* Channel List */}
           {allChannels.map((channel) => {
             // console.log("channel type", channel);
@@ -56,7 +68,7 @@ export default function Sidebar() {
                       selectChannel(channel);
                     }}
                   >
-                    {"# " + channel.title}
+                    {"#"}   &nbsp;  {channel.title}
                   </button>
                 </div>
               );
@@ -64,7 +76,7 @@ export default function Sidebar() {
           })}
           <div className="create-channel-button">
             <OpenModalButton
-              buttonText="+ Add a Channel"
+              buttonText={"+ Add a Channel"}
               modalComponent={<CreateChannelModal type="create" />}
             />
           </div>
@@ -72,7 +84,7 @@ export default function Sidebar() {
 
         <div className="sidebar-chat-section">
           <div className="sidebar-channel-section">
-            <div className="sidebar-section-header">Chats</div>
+            <div className="sidebar-section-header"><i class="fa-solid fa-caret-down"></i>&nbsp;&nbsp;Chats</div>
             {allUsers.map((user) => {
               console.log("map function run once for ", user);
               if (!sessionUser) return "";

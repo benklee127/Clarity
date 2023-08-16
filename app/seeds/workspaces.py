@@ -6,9 +6,10 @@ from datetime import datetime
 def seed_workspaces():
     workspace1 = Workspace(title='App Academy', description="workspace desc", user_id=1, created_at=datetime.now(), icon="https://upload.wikimedia.org/wikipedia/commons/7/7e/Appacademylogo.png")
     workspace2 = Workspace(title='Juniper', description="workspace desc", user_id=1, created_at=datetime.now(), icon="https://i.imgur.com/QufMzcQ.png")
-
+    workspace3 = Workspace(title='Cherry', description="workspace desc", user_id=1, created_at=datetime.now())
     db.session.add( workspace1 )
     db.session.add( workspace2 )
+    db.session.add( workspace3 ) 
     db.session.commit()
     # pass
 

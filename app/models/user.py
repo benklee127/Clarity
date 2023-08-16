@@ -53,6 +53,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
+        print('self.messages', self.messages)
         return {
             'id': self.id,
             'username': self.username,
@@ -63,4 +64,5 @@ class User(db.Model, UserMixin):
             'display_name': self.display_name,
             'last_workspace': self.last_workspace,
             'last_channel': self.last_channel,
+            # 'messages': {self.messages.values()},
         }

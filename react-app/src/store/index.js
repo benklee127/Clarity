@@ -5,12 +5,15 @@ import channels from "./channel";
 import users from "./user";
 import messages from "./message";
 import workspaces from "./workspace"
+import threads from "./thread"
 
 const rootReducer = combineReducers({
   session,
   channels,
   users,
   workspaces,
+  messages,
+  threads,
 });
 
 let enhancer;

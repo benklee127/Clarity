@@ -48,13 +48,22 @@ def create_workspace():
         else:
             new_workspace.icon = "https://webobjects2.cdw.com/is/image/CDW/4822480?$product-detail$"
         db.session.add(new_workspace)
+        #join workspace and add default channels
+        join_workspace(new_workspace.id)
+        readme = Channel(title='readme', user_id=current_user.id, description="feel free to change this to whatever you'd like!", chType='gc', created_at = datetime.now(),workspace_id=new_workspace.id)
+        general = Channel(title='general', user_id=current_user.id, description="feel free to change this to whatever you'd like!", chType='gc', created_at = datetime.now(), workspace_id=new_workspace.id)
+
+        db.session.add(readme)
+        db.session.add(general)
         db.session.commit()
+
+
         return new_workspace.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @workspace_routes.route("/join/<int:workspace_id>")
 def join_workspace(workspace_id):
-    user = User.query.get(1)
+    user = User.query.get(current_user.id)
     workspace = Workspace.query.get(workspace_id)
 
     if not user or not workspace:

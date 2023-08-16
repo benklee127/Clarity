@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-
+# from app.models import User, Channel, Message, Reply, db
 
 class Message(db.Model):
     __tablename__ = 'messages'
@@ -14,11 +14,14 @@ class Message(db.Model):
     created_at = db.Column(db.DateTime, nullable=False)
     updated_at = db.Column(db.DateTime)
     is_thread = db.Column(db.Boolean)
-
+    reply_count = db.Column(db.Integer, default=0)
     user = db.relationship("User", back_populates="messages")
     channels = db.relationship("Channel", back_populates="messages")
     replies = db.relationship("Reply", back_populates="messages")
 
+    # def get_replies(self):
+    #     replies = Reply.query.filter(Reply.message_id == self.id).all()
+    #     return [reply.to_dict() for reply in replies]
 
     def to_dict(self):
         return {

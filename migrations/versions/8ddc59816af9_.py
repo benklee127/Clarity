@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: a46ce2c331f9
+Revision ID: 8ddc59816af9
 Revises: 
-Create Date: 2023-08-11 11:17:33.376738
+Create Date: 2023-08-16 03:39:21.434374
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a46ce2c331f9'
+revision = '8ddc59816af9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,7 +42,8 @@ def upgrade():
     sa.Column('privacyType', sa.String(length=255), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('title')
     )
     op.create_table('channels',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -75,6 +76,7 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('is_thread', sa.Boolean(), nullable=True),
+    sa.Column('reply_count', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['channel_id'], ['channels.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
