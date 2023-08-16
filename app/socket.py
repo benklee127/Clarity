@@ -13,7 +13,7 @@ socketio = SocketIO(cors_allowed_origins = origins)
 
 @socketio.on("chat")
 def handle_message(data):
-    print('hereinsocketroute!!socketsstart!!!!')
+    # print('hereinsocketroute!!socketsstart!!!!')
     dm = Message(
         user_id = data['user_id'],
         content = data['content'],
@@ -22,5 +22,5 @@ def handle_message(data):
     )
     db.session.add(dm)
     db.session.commit()
-    print('hereinsocketroute!!sockets!!!!')
+    # print('hereinsocketroute!!sockets!!!!')
     emit("chat", data, broadcast=True)

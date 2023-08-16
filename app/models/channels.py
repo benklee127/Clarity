@@ -15,11 +15,12 @@ class Channel(db.Model):
     privacyType = db.Column(db.String(255)) #post capstone implementation
     key = db.Column(db.String(50)) #key for dm channels
     created_at = db.Column(db.DateTime)
+    workspace_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("workspaces.id")))
 
-    user = db.relationship("User", back_populates="channels")
+    workspace = db.relationship("Workspace",  back_populates="channels")
     messages = db.relationship("Message", back_populates="channels")
-
-    # userchannels = db.relationship("User", secondary='user_channels', back_populates='userchannels')
+    channel_members = db.relationship("User", secondary="user_channels", back_populates='channel_members')
+    replies = db.relationship("Reply", back_populates="channels")
 
     def to_dict(self):
         return {
@@ -30,5 +31,5 @@ class Channel(db.Model):
             'description': self.description,
             'icon': self.icon,
             'key': self.key,
-            'created_at' : self.created_at
+            'created_at' : self.created_at,
         }

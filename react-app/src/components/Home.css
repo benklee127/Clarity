@@ -1,47 +1,59 @@
 /* overall layout */
 .home-wrapper {
+    position: fixed;
     display: flex;
-    flex-wrap: row;
-    flex-wrap:wrap;
+    flex-direction: column;
+
 }
+
+.test {}
 
 .navbar-wrapper {
     width: 100vw;
-    height: 7vh;
+    /* height: 7vh; */
     background-color: rgb(59, 4, 4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: center;
+    height: 44px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 
-.main-wrapper{
+.main-wrapper {
     display: flex;
     flex-direction: row;
     width: 100vw;
+    height: calc(100vh - 44px);
+    /* border: black solid 1px; */
 }
 
 .sidebar-wrapper {
 
-    width: 20vw;
-    height: 93vh;
+    min-width: 10vw;
+    height: 100%;
     background-color: rgb(102, 2, 2);
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
-.workspace-bar{
+.workspace-bar {
     height: 30px;
     display: flex;
     align-items: center;
     padding-top: 10px;
-    padding-left:20px;
+    padding-left: 20px;
     padding-bottom: 10px;
     color: rgb(231, 226, 226);
 }
 
 
 .channel-wrapper {
-    width: 80vw;
-    height: 93vh;
+    width: 88vw;
+    height: 100%;
     background-color: rgb(245, 237, 237);
-
+    display: flex;
 
 }
 
@@ -55,6 +67,8 @@
     padding-left: 20px;
     padding-bottom: 10px;
     color: rgb(208, 189, 189);
+    flex-wrap: nowrap;
+
 }
 
 /* .sidebar-chat-section {
@@ -63,16 +77,29 @@
 } */
 
 /* sidebar css */
-.create-channel-button > button{
+.create-channel-button>button {
     background-color: rgb(102, 2, 2);
     text-align: left;
+    width: 100px;
+}
+
+.workspace-button {
+    width: 150px;
+    padding: 5px;
+    display: flex;
+}
+
+.workspace-button:hover {
+    background-color: rgb(151, 107, 107);
+    border-radius: 5px;
 }
 
 
 /* Channel layout */
 
 .channel-header {
-    height: 8vh;
+    height: 50px;
+    width: 100%;
     border-top: 0.5px solid rgb(151, 107, 107);
 }
 
@@ -101,15 +128,16 @@
 }
 
 .channel-header-wrapper {
-    height: 8vh;
+    height: 50px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     padding-left: 5px;
 }
+
 .ch-header-section {
-    display:flex;
+    display: flex;
     align-items: baseline;
     padding: 10px;
 }
@@ -118,6 +146,12 @@
     height: 58vh;
     overflow-y: auto;
     overflow-x: hidden;
+    width: 100%;
+    border-top: 0.5px solid rgb(151, 107, 107);
+}
+
+.thread-gallery {
+
     border-top: 0.5px solid rgb(151, 107, 107);
 }
 
@@ -129,27 +163,31 @@
 .channel-messages {
     padding: 10px;
 }
-.channel-message {
 
+.channel-message {
+    min-height: 200px;
+    width: 100%;
     height: 20vh;
-    border-top: 0.5px solid rgb(151, 107, 107);
+    /* border-top: 0.5px solid rgb(151, 107, 107); */
 }
 
 .form-bot-banner {
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 98%;
 }
+
 /* dm header css */
 
 .dm-header-wrapper {
     height: 100%;
 }
+
 .dm-header {
     height: 100%;
     padding-left: 10px;
-    display:flex;
+    display: flex;
     display: row;
     align-items: center;
 
@@ -171,12 +209,12 @@
 /* messages */
 
 .message {
-    display:flex;
-    padding-top:6px;
+    display: flex;
+    padding-top: 6px;
     padding-bottom: 6px;
-    padding-left:10px;
-    min-height:  40px;
-    width: 80vw;
+    padding-left: 10px;
+    min-height: 40px;
+    width: 100%;
 }
 
 .message .image-wrapper {
@@ -192,7 +230,7 @@
     max-height: 40px;
 }
 
-.message:hover{
+.message:hover {
     background-color: rgb(203, 186, 186);
 }
 
@@ -211,14 +249,14 @@
 
 .message-header {
     font-weight: 600;
-    width:  80vw;
+
     display: flex;
     justify-content: space-between;
     flex-direction: row;
 }
 
 .message-name-date-wrapper {
-    display:flex;
+    display: flex;
     flex-direction: row;
     align-content: flex-start;
 }
@@ -230,21 +268,22 @@
 }
 
 .message-column {
-    padding-left:  10px;
-    display:flex;
-    width: 70vw;
+    padding-left: 10px;
+    display: flex;
+    width: 90%;
+    flex-direction: column;
     flex-wrap: wrap;
 }
 
 .message-content {
     overflow-wrap: break-word;
-    width: 70vw;
+    /* width: 70vw; */
 
     /* inline-size: 150px; */
 }
 
-.message-edit textarea{
-    width: 99%;
+.message-edit textarea {
+    width: 94%;
     height: 100%;
     margin: 5px;
     box-sizing: border-box;
@@ -271,6 +310,16 @@
     color: rgb(208, 189, 189);
     flex-wrap: nowrap;
 }
+
+.channel-button button {
+    overflow-x: hidden;
+    width: 150px;
+    background-color: rgb(102, 2, 2);
+    text-align: left;
+    width: 100px;
+}
+
+
 .ch-button {
     padding-top: 2px;
     padding-bottom: 2px;
@@ -282,6 +331,7 @@
     flex-wrap: nowrap;
     font-size: medium;
 }
+
 .ch-button:hover {
     background-color: rgb(151, 107, 107);
     color: white;
@@ -293,6 +343,8 @@
 .sidebar-section-header {
     padding-left: 5px;
     padding-bottom: 5px;
+    overflow-x: hidden;
+    width: 150px;
 }
 
 .sidebar-channel-section button:hover {
@@ -300,32 +352,52 @@
     color: white;
     border: none;
 }
+
 .create-channel-button {
+    width: 150px;
+    overflow-x: hidden;
+}
+
+.channel-section {
+    display: flex;
+    flex-direction: column;
     width: 100%;
 }
-.create-channel-button button{
+
+.channel-section-split {
+    width: 50%;
+}
+
+.create-channel-button button {
     background-color: transparent;
     border: none;
     border-radius: 5px;
     color: rgb(208, 189, 189);
     font-weight: 100;
-    width: 100%;
+    width: 150px;
+
 }
+
 /* .create-channel-button button:hover{
     background-color: rgb(151, 107, 107);
     color: white;
     border: none;
 } */
 
-.create-channel-button button{
+.create-channel-button button {
     background-color: transparent;
     border: none;
 }
+
 .message-form {
     height: 25vh;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 20px;
+    margin-left: 15px;
 }
 
 .message-form-button {
@@ -333,12 +405,14 @@
     border: transparent;
     width: 100px;
 }
-.message-form-button >div{
+
+.message-form-button>div {
     background-color: transparent;
     border: transparent;
     font-size: x-large;
     color: rgb(92, 60, 60);
 }
+
 .message-form-content {
     width: 99%;
     height: 90%;
@@ -359,7 +433,7 @@
     background-color: rgb(60, 8, 8);
     color: lightgrey;
     font-size: small;
-    display:flex;
+    display: flex;
     align-items: center;
 
 }
@@ -367,7 +441,7 @@
 .dh-main-wrapper {
     display: flex;
     flex-direction: row;
-    width:100%;
+    width: 100%;
     height: 96vh;
     background-color: rgb(88, 20, 20);
 }
@@ -376,11 +450,12 @@
     width: 40vw;
     height: 100vh;
     overflow: hidden;
-    display:flex;
+    display: flex;
     align-items: flex-end;
     justify-content: flex-start;
     object-fit: fill;
 }
+
 .homebackground {
     height: 100vh;
     opacity: 0.7;
@@ -393,25 +468,26 @@
     color: white;
     font-size: 30px;
     font-weight: bold;
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
-.dh-main > div {
+.dh-main>div {
     padding-bottom: 30px;
 }
 
 .dh-main button {
-    background-color:  rgb(194, 154, 154);
+    background-color: rgb(194, 154, 154);
     border-radius: 5px;
     border-color: rgb(59, 36, 36);
     border-style: solid;
     border-width: 1px;
-    color:white;
-    font-weight:600;
+    color: white;
+    font-weight: 600;
     width: 200px;
     height: 40px;
 }
+
 .dh-main button:hover {
     background-color: rgb(206, 173, 173);
     color: white;
@@ -426,23 +502,120 @@
 ::-webkit-scrollbar {
     width: 10px;
     border-radius: 5px;
-  }
+}
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: rgb(245, 237, 237);
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
 
 
-  }
+}
 
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #674b4b;
     border-radius: 5px;
 
-  }
+}
 
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background: #3c0c0c;
-  }
+}
+
+
+.join-workspace-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 10px;
+}
+
+/* .join-workspace-page>div {
+    border: dotted black 1px;
+}
+
+.join-workspace-page>div>div {
+    border: dotted red 1px;
+} */
+
+.join-workspace-brand {
+    padding: 25px;
+    font-size: 16pt;
+}
+
+.join-workspace-cta {
+    padding-bottom: 25px;
+    font-size: 30pt;
+    font-weight: 600;
+}
+
+.join-workspace-list {
+
+    width: 500px;
+    margin-top: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px lightgray;
+    overflow: hidden;
+}
+
+.join-ws-list {
+    max-height: 500px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.join-workspace-list-header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+
+}
+
+
+
+.join-workspace-button {
+    border-top: solid rgb(230, 228, 228) 1px;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    height: 75px;
+    width: fill;
+    gap: 10px;
+}
+
+.join-ws-title {
+    font-weight: 600;
+}
+
+.join-workspace-button:hover {
+    background-color: #522525;
+    color: rgb(237, 236, 236);
+}
+
+.join-workspace-img {
+    width: 50px;
+    display: flex;
+    overflow: hidden;
+    border: rgb(236, 235, 235) solid 1px;
+    border-radius: 5px;
+}
+
+
+.join-workspace-img>img {
+    width: 50px;
+}
+
+.thread-wrapper {
+    width: 50%;
+    overflow-x: hidden;
+    border-left: solid #3c0c0c 1px;
+
+}
+
+.close-thread {
+    padding-right: 30px;
+}

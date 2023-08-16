@@ -1,0 +1,58 @@
+.workspace-list {
+    width: 55px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding-top: 10px;
+    background-color: rgb(102, 2, 2);
+    border-right: solid 1px rgb(151, 107, 107);
+}
+
+.workspace-item {
+    border: transparent solid;
+    border-radius: 10px;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+    font-size: 16pt;
+}
+
+.workspace-item:hover {
+    border: rgb(151, 107, 107) solid;
+
+}
+
+.workspace-item-selected {
+    border: transparent solid;
+    border-radius: 10px;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+    font-size: 16pt;
+    border: rgb(231, 204, 204) solid;
+
+}
+
+.workspace-item-img {
+    border-radius: 8px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: white;
+}
+
+.workspace-item-img>img {
+    /* height: 35px;
+    width: 35px; */
+    width: 100%;
+}

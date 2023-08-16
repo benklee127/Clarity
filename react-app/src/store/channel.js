@@ -15,6 +15,7 @@ const SELECT_CHAT = "/channels/SELECT_CHAT";
 const UPDATE_MESSAGE = "/channels/UPDATE_MESSAGE";
 const DELETE_MESSAGE = "/channels/DELETE_MESSAGE";
 
+
 const getAllChannelsAction = (channels) => ({
   type: GET_ALL_CHANNELS,
   payload: channels,
@@ -86,10 +87,10 @@ export const loadChannel = (channel) => async (dispatch) => {
   return channel;
 };
 
-//thunks
-export const getAllChannelsThunk = () => async (dispatch) => {
-  const res = await fetch("/api/channels");
 
+//thunks
+export const getAllChannelsThunk = (id) => async (dispatch) => {
+  const res = await fetch(`/api/channels/workspace/${id}`);
   if (res.ok) {
     const channels = await res.json();
     console.log("channels after getting all", channels.channels);
@@ -134,9 +135,9 @@ export const postMessageThunk = (message) => async (dispatch) => {
   }
 };
 
-export const createChannelThunk = (channel) => async (dispatch) => {
+export const createChannelThunk = (channel, workspace_id) => async (dispatch) => {
   console.log("channels thunk before res", channel);
-  const res = await fetch(`/api/channels/creategc`, {
+  const res = await fetch(`/api/channels/createwsgc/${workspace_id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(channel),
@@ -241,10 +242,15 @@ const initialState = {
   currChannel: {},
   channelMessages: [],
   // allChats: [],
+  currWorkspace: -1,
 };
 
 const channelReducer = (state = initialState, action) => {
   switch (action.type) {
+    // case LOAD_WORKSPACE: {
+    //   const newState = {...state}
+    //   return newState
+    // }
     case GET_ALL_CHANNELS: {
       const newState = { ...state, allChannels: [] };
       newState.allChannels = action.payload;

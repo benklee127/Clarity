@@ -1,6 +1,6 @@
 import Sidebar from "./Sidebar";
 import Channel from "./Channel";
-import Navbar from "./Navbar";
+import WorkspaceBar from "./WorkspaceBar";
 import "./Home.css";
 import { useSelector } from "react-redux";
 import Navigation from "./Navigation";
@@ -11,10 +11,18 @@ import { useDispatch } from "react-redux";
 import SignupFormModal from "./SignupFormModal";
 import { login } from "../store/session";
 import homebackground from "../assets/homebackground.png";
+import { useEffect } from "react";
+import { getUserWorkspacesThunk, getWorkspacesThunk, joinWorkspaceThunk } from "../store/workspace";
+import { getAllChannelsThunk } from "../store/channel";
+import JoinChannelPage from "./JoinChannelPage";
+import { useState } from "react";
 
 export default function Home({ isLoaded }) {
   const currentUser = useSelector((state) => state.session.user);
   const currChannel = useSelector((state) => state.channels.currChannel);
+  const userWorkspaces = useSelector((state) => state.workspaces.userWorkspaces);
+  const allWorkspaces = useSelector((state) => state.workspaces.allWorkspaces);
+  const [showJoinChannel, setShowJoinChannel] = useState(false);
   const dispatch = useDispatch();
 
   const handleLogout = (e) => {
@@ -22,18 +30,38 @@ export default function Home({ isLoaded }) {
     dispatch(logout());
   };
 
+  useEffect(() => {
+    dispatch(getUserWorkspacesThunk())
+    dispatch(getWorkspacesThunk())
+  }, [dispatch,currentUser])
+
+  const joinWorkspace = (id) => {
+    dispatch(joinWorkspaceThunk(id));
+    dispatch(getUserWorkspacesThunk());
+    setShowJoinChannel(false);
+  }
+
   const demoUser = () => {
     return dispatch(login("demo@aa.io", "password"));
   };
-
-  if (currentUser) {
+  if (allWorkspaces.length < 1) return null;
+  // if(userWorkspaces.length < 1) setShowJoinChannel(true);
+  if (currentUser ) {
     return (
       <div className="home-wrapper">
         <Navigation isLoaded={isLoaded} />
-        <div className="main-wrapper">
+        { userWorkspaces.length < 1 || showJoinChannel ?
+        <JoinChannelPage showJoinChannel={showJoinChannel} setShowJoinChannel={setShowJoinChannel}/>
+        :<div className="main-wrapper">
+          {/* {showJoinChannel ? "true" + userWorkspaces.length: "false"} */}
+          <WorkspaceBar showJoinChannel={showJoinChannel} setShowJoinChannel={setShowJoinChannel}/>
           <Sidebar />
           <Channel currChannelProp={currChannel} />
         </div>
+
+
+        }
+
       </div>
     );
   } else {

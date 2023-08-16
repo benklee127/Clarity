@@ -6,19 +6,22 @@ import {
   getChannelMessages,
   updateMessageThunk,
 } from "../store/channel";
+import { getMessageThread, createThreadReplyThunk, updateThreadReplyThunk, deleteThreadReplyThunk } from "../store/thread";
 // import MessageForm from "./MessageForm";
 // import { postMessageThunk } from "../store/channel";
 // import OpenModalButton from "./OpenModalButton";
 
-export default function Message({ message ,showThread, setShowThread, threadId, setThreadId }) {
+export default function ThreadReply({reply}) {
   const sessionUser = useSelector((state) => state.session.user);
   const allUsers = useSelector((state) => state.users.allUsers);
   const currChannel = useSelector((state) => state.channels.currChannel);
   const [errors, setErrors] = useState([]);
-  const [newContent, setNewContent] = useState(message.content);
+  const [newContent, setNewContent] = useState(reply.content);
   const channelMessages = useSelector(
     (state) => state.channels.channelMessages
   );
+  const currThread = useSelector((state) => state.threads.currThread)
+
   const [showEditForm, setShowEditForm] = useState(false);
   const dispatch = useDispatch();
   // console.log("message in ", message);
@@ -27,60 +30,46 @@ export default function Message({ message ,showThread, setShowThread, threadId, 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newMessage = {
+    const newThreadReply = {
       content: newContent,
-      user_id: sessionUser.id,
     };
-    let messageId = message.id;
-
-    const data = await dispatch(updateMessageThunk(newMessage, messageId));
+    const data = await dispatch(updateThreadReplyThunk(newThreadReply, reply.message_id));
     setShowEditForm(false);
   };
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    const data = await dispatch(deleteMessageThunk(message.id, currChannel.id));
+    const data = await dispatch(deleteThreadReplyThunk(reply.id));
   };
   const toggleEdit = () => {
     // console.log("toggle attempt", showEditForm);
     setShowEditForm(!showEditForm);
   };
 
-  const openThread = () => {
-    setShowThread(false)
-    console.log('messageopenthread', message.id);
-    console.log('thread id', threadId);
-    setThreadId(message)
-  }
-  // const openEdit = () => {
-  //   if (showEditForm) return;
-  //   else setShowEditForm(true);
-  // };
+
   const closeEdit = () => setShowEditForm(false);
 
   const messageEditClass = "message-edit" + (showEditForm ? "" : " hidden");
 
-  if (message == {} || !message || !message.user) return "";
+  if (reply == {} || !reply || !reply.user) return "";
 
-  console.log("message", message);
-  return (
+  console.log("message", reply);
+  return (<div>
     <div className="message">
       <div className="image-column">
         <div className="image-wrapper">
-          <img src={message.user.profile_photo} />
+          <img src={reply.user.profile_photo} />
         </div>
       </div>
       <div className="message-column">
         <div className="message-header">
           <div className="message-name-date-wrapper">
-            {message.user.first_name + " " + message.user.last_name + " "}
-            <div className="message-date">{message.created_at}</div>
+            {reply.user.first_name + " " + reply.user.last_name + " "}
+            <div className="message-date">{reply.created_at}</div>
           </div>
           <div className="comment-button">
-              <button onClick={ openThread} className="comment-edit-button">
-                <i class="fa-solid fa-comment"></i>
-              </button>
-          {message.user_id === sessionUser.id ? (
+
+          {reply.user_id === sessionUser.id ? (
             <>
               <button onClick={toggleEdit} className="comment-edit-button">
                 <i class="fa-regular fa-pen-to-square"></i>
@@ -116,10 +105,11 @@ export default function Message({ message ,showThread, setShowThread, threadId, 
               </form>
             </div>
           ) : (
-            message.content
+            reply.content
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }

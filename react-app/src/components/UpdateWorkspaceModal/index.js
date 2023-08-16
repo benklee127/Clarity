@@ -1,39 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "./CreateChannelModal.css";
+import "./UpdateWorkspaceModal.css";
 import {
   createChannelThunk,
   loadChannel,
   updateChannelThunk,
 } from "../../store/channel";
+import { updateWorkspaceThunk } from "../../store/workspace";
 
-function CreateChannelModal({ type, channelId }) {
+function UpdateWorkspaceModal({type = 'update'}) {
   const dispatch = useDispatch();
-  const currChannel = useSelector((state) => state.channels.currChannel);
+  const currWorkspace = useSelector((state) => state.workspaces.currWorkspace);
   const sessionUser = useSelector((state) => state.session.user);
-  const allChannels = useSelector((state) => state.channels.allChannels);
-  const currWorkspace = useSelector((state) => state.workspaces.currWorkspace)
-  console.log("allChannelArr", allChannels);
-  const channelTitles = allChannels.map((channel) => channel.title);
-  console.log("allChannel title", channelTitles);
-  const creatorId = currChannel.user_id;
-  console.log("type", type);
-  const [title, setTitle] = useState(type == "create" ? "" : currChannel.title);
-  const [description, setDescription] = useState(
-    type == "create" ? "" : currChannel.description
-  );
+  const allWorkspaces = useSelector((state) => state.workspaces.allWorkspaces);
+
+
+  console.log("allChannelArr", allWorkspaces);
+  const workspaceTitles = allWorkspaces.map((workspace) => workspace.title);
+  console.log("allChannel title", workspaceTitles);
+  const creatorId = currWorkspace.user_id;
+
+  const [title, setTitle] = useState(currWorkspace.title);
+  const [description, setDescription] = useState(currWorkspace.description);
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const [selectedMenu, setSelectedMenu] = useState(1);
-  const [editTitle, setEditTitle] = useState(type == "create");
-  const [editDesc, setEditDesc] = useState(type == "create");
-  console.log("channelId", channelId);
-  console.log("type", type);
+  const [editTitle, setEditTitle] = useState(false);
+  const [editDesc, setEditDesc] = useState(false);
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newChannel = {
+    const newWorkspace = {
       title: title,
       description: description,
     };
@@ -42,18 +43,14 @@ function CreateChannelModal({ type, channelId }) {
       setErrors([...errors, "Title must be at least 3 characters"]);
       return;
     }
-    if (title != currChannel.title && channelTitles.includes(title)) {
+    if (title != currWorkspace.title && workspaceTitles.includes(title)) {
       setErrors([...errors, "Title must be unique"]);
       return;
     }
 
-    if (type === "create") {
-      data = await dispatch(createChannelThunk(newChannel, currWorkspace.id));
-      closeModal();
-    } else if (type === "update") {
-      console.log("update channel");
-      data = await dispatch(updateChannelThunk(newChannel, channelId));
-    }
+
+      data = await dispatch(updateWorkspaceThunk(currWorkspace.id, newWorkspace));
+
     if (data) {
       setErrors(data);
     } else {
@@ -61,7 +58,7 @@ function CreateChannelModal({ type, channelId }) {
       setEditDesc(false);
     }
   };
-  console.log("currChannel", currChannel.title);
+  console.log("currWorkspace", currWorkspace.title);
 
   const discardChanges = () => {
     setErrors([]);
@@ -88,15 +85,15 @@ function CreateChannelModal({ type, channelId }) {
     }
   };
 
-  const owner = currChannel.user_id == sessionUser.id;
+  const owner = currWorkspace.user_id == sessionUser.id;
 
   return (
     <div className="create-channel-modal">
       <div className="channel-card-header-wrapper">
         <div className={"cc-header"}>
-          {type == "create" ? "Create a Channel" : "#" + currChannel.title}
+          {"#" + currWorkspace.title}
         </div>
-        {type == "update" ? (
+        {true ? (
           <div className="cc-header-menu">
             <div className="cc-header-menu-option-wrapper">
               <div
@@ -120,7 +117,7 @@ function CreateChannelModal({ type, channelId }) {
                 Members
               </div>
             </div>
-            {currChannel.user_id == sessionUser.id ? (
+            {currWorkspace.user_id == sessionUser.id ? (
               <div className="cc-header-menu-option-wrapper">
                 <div
                   className={
@@ -154,7 +151,7 @@ function CreateChannelModal({ type, channelId }) {
             )}
             <div className="cc-form-item" onClick={() => toggleEditTitle()}>
               <div className="form-input-header">
-                <div>Channel name</div>
+                <div>Workspace name</div>
                 {editTitle ? (
                   <div
                     className={
@@ -179,7 +176,7 @@ function CreateChannelModal({ type, channelId }) {
                   required
                 />
               ) : (
-                currChannel.title
+                currWorkspace.title
               )}
             </div>
             <div className="cc-form-item" onClick={() => toggleEditDesc()}>
@@ -207,7 +204,7 @@ function CreateChannelModal({ type, channelId }) {
                   onChange={(e) => setDescription(e.target.value)}
                 />
               ) : (
-                currChannel.description
+                currWorkspace.description
               )}
             </div>
             {type == "create" || editDesc || editTitle ? (
@@ -248,7 +245,7 @@ function CreateChannelModal({ type, channelId }) {
         )
 
         // selectedMenu == 3 ? (
-        //   currChannel.user_id == sessionUser.id ? (
+        //   currWorkspace.user_id == sessionUser.id ? (
         //     <div className="channel-form">
         //       <div className="cc-delete">
         //         <div className="cc-delete-button">Delete this channel</div>
@@ -269,4 +266,4 @@ function CreateChannelModal({ type, channelId }) {
   );
 }
 
-export default CreateChannelModal;
+export default UpdateWorkspaceModal;

@@ -6,6 +6,7 @@ html,body {
     font-family:  sans-serif;
     overflow: hidden;
     overflow-wrap: break-word;
+    background-color: rgb(245, 237, 237);
 }
 
 .char-counter {

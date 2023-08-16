@@ -1,0 +1,7 @@
+<form method="post" action="">
+    {{ form.csrf_token }}
+    <p>{{form.content.label}}: {{form.content}}</p>
+    <p>{{form.message_id.label}}: {{form.message_id}}</p>
+    <p>{{form.channel_id.label}}: {{form.channel_id}}</p>
+    <p>{{form.submit}}</p>
+</form>
