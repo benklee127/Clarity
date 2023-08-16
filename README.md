@@ -20,25 +20,25 @@ Python, JavaScript, Flask, React, Redux, CSS, HTML, AWS
 
 ## Screen Shots: 
 ### Landing page: 
-![image](![image](https://github.com/benklee127/Clarity/assets/6230804/592d9727-8c0e-4017-b981-854442acd98e)
-)
+![image](https://github.com/benklee127/Clarity/assets/6230804/592d9727-8c0e-4017-b981-854442acd98e)
+
 
 ### Log in/Sign up page:
-![image](![image](https://github.com/benklee127/Clarity/assets/6230804/0f37dd5d-6987-4047-beba-321852d3b36d)
-)
+![image](https://github.com/benklee127/Clarity/assets/6230804/0f37dd5d-6987-4047-beba-321852d3b36d)
+
 
 ### Home View: 
-![image](![image](https://github.com/benklee127/Clarity/assets/6230804/e11d7e1d-63e4-477d-902a-d456b214793e)
-)
+![image](https://github.com/benklee127/Clarity/assets/6230804/e11d7e1d-63e4-477d-902a-d456b214793e)
+
 
 
 ### Editing Channel Modal: 
-![image](![image](https://github.com/benklee127/Clarity/assets/6230804/7ba8bfc5-01f5-4de6-a5f1-5b334a7aa2ea)
-)
+![image](https://github.com/benklee127/Clarity/assets/6230804/7ba8bfc5-01f5-4de6-a5f1-5b334a7aa2ea)
+
 
 ### Join/create Channel page: 
-![image](![image](https://github.com/benklee127/Clarity/assets/6230804/8c165acb-4715-4bd3-9547-37aba2e14b55)
-)
+![image](https://github.com/benklee127/Clarity/assets/6230804/8c165acb-4715-4bd3-9547-37aba2e14b55)
+
 
 
 
