@@ -17,9 +17,9 @@ function UpdateWorkspaceModal({type = 'update'}) {
   const allWorkspaces = useSelector((state) => state.workspaces.allWorkspaces);
 
 
-  console.log("allChannelArr", allWorkspaces);
+  // console.log("allChannelArr", allWorkspaces);
   const workspaceTitles = allWorkspaces.map((workspace) => workspace.title);
-  console.log("allChannel title", workspaceTitles);
+  // console.log("allChannel title", workspaceTitles);
   const creatorId = currWorkspace.user_id;
 
   const [title, setTitle] = useState(currWorkspace.title);
@@ -58,7 +58,7 @@ function UpdateWorkspaceModal({type = 'update'}) {
       setEditDesc(false);
     }
   };
-  console.log("currWorkspace", currWorkspace.title);
+  // console.log("currWorkspace", currWorkspace.title);
 
   const discardChanges = () => {
     setErrors([]);

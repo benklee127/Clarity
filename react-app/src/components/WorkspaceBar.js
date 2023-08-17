@@ -13,7 +13,7 @@ export default function WorkspaceBar({showJoinChannel, setShowJoinChannel}) {
 
     useEffect(() => {
         // dispatch(getWorkspacesThunk());
-        console.log('useeffectforworkspacescalled', showJoinChannel, setShowJoinChannel);
+        // console.log('useeffectforworkspacescalled', showJoinChannel, setShowJoinChannel);
         dispatch(getUserWorkspacesThunk());
         if (!currWorkspace) dispatch(loadWorkspacesThunk(1))
     }, [currWorkspace]);

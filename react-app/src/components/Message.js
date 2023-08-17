@@ -48,8 +48,6 @@ export default function Message({ message ,showThread, setShowThread, threadId, 
 
   const openThread = () => {
     setShowThread(false)
-    console.log('messageopenthread', message.id);
-    console.log('thread id', threadId);
     setThreadId(message)
   }
   // const openEdit = () => {
@@ -62,7 +60,7 @@ export default function Message({ message ,showThread, setShowThread, threadId, 
 
   if (message == {} || !message || !message.user) return "";
 
-  console.log("message", message);
+  // console.log("message", message);
   return (
     <div className="message">
       <div className="image-column">

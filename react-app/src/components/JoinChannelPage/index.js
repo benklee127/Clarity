@@ -38,7 +38,7 @@ export default function JoinChannel({showJoinChannel, setShowJoinChannel}) {
       <div className='join-workspace-list-header'>Workspaces available</div>
       <div className='join-ws-list'>
       {allWorkspaces.map((workspace) => {
-        console.log('test  run', workspace);
+        // // console.log('test  run', workspace);
         return (<div className='join-workspace-button' onClick={() => joinWorkspace(workspace.id)}>
           <div className='join-workspace-img'><img src={workspace.icon}/></div>
           <div className='join-workspace-button-info'>

@@ -20,7 +20,7 @@ export default function Thread({ showThread, setShowThread, threadId}) {
     const dispatch = useDispatch()
     const [newContent, setNewContent] = useState("");
     useEffect(()=> {
-        console.log('running get thread dispatch');
+        // console.log('running get thread dispatch');
         dispatch(getMessageThread(threadId.id))
     },[showThread, threadId])
 
@@ -29,14 +29,14 @@ export default function Thread({ showThread, setShowThread, threadId}) {
     }
 
     const postReply = async (e) => {
-        console.log('inpostreply');
+        // console.log('inpostreply');
         if (newContent.length > 0 && threadId) {
             let newReply = {
                 content: newContent,
                 message_id: threadId.id,
                 channel_id: currChannel.id,
             };
-            console.log("new message", newReply);
+            // console.log("new message", newReply);
 
             const data = await dispatch(createThreadReplyThunk(newReply));
 

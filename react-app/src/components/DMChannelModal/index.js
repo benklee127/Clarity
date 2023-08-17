@@ -19,7 +19,7 @@ function DMChannelModal({ otherUser, channelId }) {
   const [selectedMenu, setSelectedMenu] = useState(1);
   const [editDesc, setEditDesc] = useState(false);
   const [description, setDescription] = useState(currChannel.description || "");
-  console.log("channelId", channelId);
+  // console.log("channelId", channelId);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newChannel = {
@@ -35,7 +35,7 @@ function DMChannelModal({ otherUser, channelId }) {
       setEditDesc(false);
     }
   };
-  console.log("currChannel", currChannel.title);
+  // console.log("currChannel", currChannel.title);
 
   const discardChanges = () => {
     setEditDesc(false);

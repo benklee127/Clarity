@@ -41,7 +41,7 @@ export const createWorkspaceThunk = (workspace) => async (dispatch) => {
     const workspace = await res.json();
     dispatch(createWorkspaceAction(workspace));
     dispatch(joinWorkspaceThunk(workspace.id))
-    console.log("workspace.id", workspace.id);
+    // console.log("workspace.id", workspace.id);
     return null;
   } else if (res.status < 500) {
     const data = await res.json();
@@ -57,7 +57,7 @@ export const getWorkspacesThunk = () => async (dispatch) => {
   const res = await fetch("/api/workspaces");
   if (res.ok) {
     const workspaces = await res.json();
-    console.log("workspaces after getting all", workspaces.workspaces);
+    // console.log("workspaces after getting all", workspaces.workspaces);
     dispatch(getWorkspacesAction(workspaces.workspaces));
     return workspaces;
   } else {
@@ -69,7 +69,7 @@ export const loadWorkspacesThunk = (id) => async (dispatch) => {
   const res = await fetch(`/api/workspaces/${id}`);
   if (res.ok) {
     const workspace = await res.json();
-    console.log("loadworkspaceattempt", workspace.workspace);
+    // console.log("loadworkspaceattempt", workspace.workspace);
     dispatch(loadWorkspaceAction(workspace.workspace));
     return workspace;
   } else {
@@ -81,7 +81,7 @@ export const joinWorkspaceThunk = (id) => async (dispatch) => {
   const res = await fetch(`/api/workspaces/join/${id}`)
   if(res.ok) {
     const workspace = await res.json();
-    dispatch(loadWorkspaceAction(workspace.workspace))
+    // dispatch(loadWorkspaceAction(workspace.workspace))
     return workspace;
   }
 }
@@ -89,7 +89,7 @@ export const getUserWorkspacesThunk = () => async (dispatch) => {
   const res = await fetch("/api/users/workspaces");
   if (res.ok) {
     const userWorkspaces = await res.json();
-    console.log("userworkspaces after getting all", userWorkspaces.workspaces);
+    // console.log("userworkspaces after getting all", userWorkspaces.workspaces);
     dispatch(getUserWorkspacesAction(userWorkspaces.workspaces));
     return userWorkspaces;
   } else {
@@ -105,7 +105,7 @@ export const updateWorkspaceThunk = (id, updateWorkspace) => async (dispatch) =>
   });
   if (res.ok) {
     const updated_workspace = await res.json();
-    console.log("channels after res", updated_workspace);
+    // console.log("channels after res", updated_workspace);
     dispatch(updateWorkspaceAction(updated_workspace));
     // return channels.channels;
   } else {
@@ -135,14 +135,14 @@ const workspaceReducer = (state = initalState, action) => {
     case LOAD_WORKSPACE: {
       const newState = { ...state, currWorkspace: {} };
       newState.currWorkspace = action.workspace;
-      console.log('load workspace', action.workspace.id);
+      // console.log('load workspace', action.workspace.id);
       return newState;
     }
     case CREATE_WORKSPACE: {
       const newState = { ...state, currWorkspace: {} };
       newState.currWorkspace = action.workspace;
-      console.log('action.workspace', action.workspace);
-      console.log('load workspace', action.workspace.id);
+      // console.log('action.workspace', action.workspace);
+      // console.log('load workspace', action.workspace.id);
       return newState;
     }
     case UPDATE_WORKSPACE: {

@@ -37,7 +37,7 @@ export const getMessageThread = (messageId) => async(dispatch) => {
 }
 
 export const createThreadReplyThunk = (reply) => async (dispatch) => {
-    console.log('hiherecreatethreadreply');
+    // console.log('hiherecreatethreadreply');
     const res = await fetch("/api/messages/reply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -105,7 +105,7 @@ const threadReducer = (state = initalState, action) => {
     }
     case CREATE_THREAD_REPLY:{
         const newState = {...state, currThread: []};
-        console.log('');
+        // console.log('');
         newState.currThread = action.thread;
         return newState
     }

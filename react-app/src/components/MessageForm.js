@@ -18,7 +18,7 @@ export default function MessageForm() {
       user_id: sessionUser.id,
       channel_id: currChannel.id,
     };
-    console.log("new message", newMessage);
+    // console.log("new message", newMessage);
     dispatch(postMessageThunk(newMessage));
     setContent("");
   };

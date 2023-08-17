@@ -53,7 +53,7 @@ export default function ThreadReply({reply}) {
 
   if (reply == {} || !reply || !reply.user) return "";
 
-  console.log("message", reply);
+  // console.log("message", reply);
   return (<div>
     <div className="message">
       <div className="image-column">
