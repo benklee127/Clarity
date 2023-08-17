@@ -117,6 +117,9 @@ export default function Message({ message ,showThread, setShowThread, threadId, 
             message.content
           )}
         </div>
+        {message.reply_count > 0 ? <div className='thread-count' onClick={ openThread}>{message.reply_count} {message.reply_count > 1 ? 'replies': 'reply'}
+          <div className='thread-button'>view thread</div>
+         </div> : ""}
       </div>
     </div>
   );

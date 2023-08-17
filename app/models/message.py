@@ -30,6 +30,7 @@ class Message(db.Model):
             'user_id': self.user_id,
             'channel_id' : self.channel_id,
             'created_at' : self.created_at,
+            'reply_count': self.reply_count,
             'user': {
                 'first_name': self.user.first_name,
                 'last_name': self.user.last_name,

@@ -619,3 +619,25 @@
 .close-thread {
     padding-right: 30px;
 }
+
+.thread-count {
+    width: 200px;
+    height: 35px;
+    margin-top: 10px;
+    /* padding-left: 15px; */
+    display: flex;
+    align-items: center;
+    text-justify: center;
+    border: solid 1px #9d8080;
+    border-radius: 5px;
+    justify-content: space-around;
+}
+
+.thread-count:hover {
+    background-color: rgb(247, 238, 238);
+}
+
+.thread-button {
+    /* padding-left: 30px; */
+    color: #8d7171
+}

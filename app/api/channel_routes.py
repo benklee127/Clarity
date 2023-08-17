@@ -40,7 +40,7 @@ def get_channels():
 #get list of channels by workspace
 @channel_routes.route('/workspace/<int:workspace_id>')
 def get_workspace_channels(workspace_id):
-    print('in route workspace')
+    # print('in route workspace')
     channels = Channel.query.filter(Channel.workspace_id == workspace_id).all()
     return {'channels' : [channel.to_dict() for channel in channels]}
 
@@ -87,7 +87,7 @@ def select_chat(key):
     #check if alr exists if not then create chat
     test = Channel.query.filter_by(key = key).first()
     if(not test):
-        print('no existing one found')
+        # print('no existing one found')
         new_chat = create_chat(key)
 
     #find chat by key
@@ -96,7 +96,7 @@ def select_chat(key):
     if chat[0]:
         return chat[0].to_dict()
     else:
-        print('err')
+        # print('err')
         return new_chat
 
 #get channels a user is in
@@ -108,7 +108,7 @@ def get_user_channels(user_id):
 @channel_routes.route('/post/<int:channel_id>', methods=["POST"])
 def post_message(channel_id):
     form = MessageForm()
-    print('form data', form.data)
+    # print('form data', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
     new_post = Message(content=form.data['content'], user_id=current_user.id, created_at=datetime.now(), channel_id=channel_id)
     db.session.add(new_post)
@@ -129,7 +129,7 @@ def join_channel(channel_id):
 @channel_routes.route('/creategc', methods=["POST"])
 def create_channel():
     form = ChannelForm()
-    print('form data', form.data)
+    # print('form data', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], chType='gc', created_at = datetime.now())
@@ -142,7 +142,7 @@ def create_channel():
 @channel_routes.route('/createwsgc/<int:workspace_id>', methods=["POST"])
 def create_ws_channel(workspace_id):
     form = ChannelForm()
-    print('form data', form.data)
+    # print('form data', form.data)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_channel = Channel(title=form.data['title'], user_id=current_user.id, description=form.data['description'], chType='gc', created_at = datetime.now(), workspace_id=workspace_id)
