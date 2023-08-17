@@ -19,9 +19,9 @@ function CreateWorkspaceModal({type, showJoinChannel, setShowJoinChannel}) {
   const allWorkspaces = useSelector((state) => state.workspaces.allWorkspaces);
 
 
-  console.log("allChannelArr", allWorkspaces);
+  // console.log("allChannelArr", allWorkspaces);
   const workspaceTitles = allWorkspaces.map((workspace) => workspace.title);
-  console.log("allChannel title", workspaceTitles);
+  // console.log("allChannel title", workspaceTitles);
 
   const [title, setTitle] = useState(type == 'create' ? "": currWorkspace.title);
   const [description, setDescription] = useState("");
@@ -33,7 +33,7 @@ function CreateWorkspaceModal({type, showJoinChannel, setShowJoinChannel}) {
   const [editDesc, setEditDesc] = useState(type == "create");
   const [editIcon, setEditIcon] = useState(type == "create");
 
-  console.log('type', type);
+  // console.log('type', type);
   let owner = currWorkspace.user_id == sessionUser.id;
   // setErrors([]);
   const handleSubmit = async (e) => {

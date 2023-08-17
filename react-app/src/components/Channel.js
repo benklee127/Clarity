@@ -33,7 +33,7 @@ export default function Channel(currChannelProp) {
   const [threadId, setThreadId] = useState();
   useEffect(() => {
     // console.log("useeffect in channel ", currChannel.id);
-    console.log("use effect run currchan", currChannel);
+    // console.log("use effect run currchan", currChannel);
     if (currChannel != {} && currChannel != undefined)
       dispatch(getChannelMessages(currChannel.id));
     else if (sessionUser.last_channel != -1){
@@ -41,16 +41,16 @@ export default function Channel(currChannelProp) {
     }
     //open socket
     socket = io()
-    console.log('connected to socket');
+    // console.log('connected to socket');
     //get messages
     socket.on("chat", (message) => {
-      console.log('chat socket triggered');
+      // console.log('chat socket triggered');
        let res = dispatch(getChannelMessages(currChannel.id))
-       console.log('res', res);
+       // console.log('res', res);
    })
 
    return (()=>{
-    console.log('socket disconnected');
+    // console.log('socket disconnected');
     socket.disconnect()
    })
 
@@ -72,7 +72,7 @@ export default function Channel(currChannelProp) {
         user_id: sessionUser.id,
         channel_id: currChannel.id,
       };
-      console.log("new message", newMessage);
+      // console.log("new message", newMessage);
       // const data = await dispatch(postMessageThunk(newMessage));
       let data = dispatch(getChannelMessages(currChannel.id));
       socket.emit("chat", newMessage)
@@ -80,11 +80,11 @@ export default function Channel(currChannelProp) {
       if (data){ bottomRef.current?.scrollIntoView({ behavior: "smooth" });}
     }
   };
-  console.log("all users", allUsers);
+  // console.log("all users", allUsers);
   let chKey = null;
   if (currChannel == {} || currChannel == undefined) return null;
   else {
-    console.log("currChannel", currChannel);
+    // console.log("currChannel", currChannel);
     chKey = currChannel.key;
   }
 
@@ -92,13 +92,13 @@ export default function Channel(currChannelProp) {
   if (chKey) {
     let ids = chKey.split("_");
     var idNums = ids.map(Number);
-    console.log("ids", idNums);
+    // console.log("ids", idNums);
     let otherUserId = idNums[0];
     if (sessionUser.id === idNums[0]) otherUserId = idNums[1];
-    console.log("other user", allUsers[otherUserId]);
+    // console.log("other user", allUsers[otherUserId]);
 
     otherUser = allUsers[otherUserId];
-    console.log('chKey after other user', chKey, 'other', otherUserId);
+    // console.log('chKey after other user', chKey, 'other', otherUserId);
 
   }
 

@@ -15,11 +15,11 @@ function CreateChannelModal({ type, channelId }) {
   const sessionUser = useSelector((state) => state.session.user);
   const allChannels = useSelector((state) => state.channels.allChannels);
   const currWorkspace = useSelector((state) => state.workspaces.currWorkspace)
-  console.log("allChannelArr", allChannels);
+  // console.log("allChannelArr", allChannels);
   const channelTitles = allChannels.map((channel) => channel.title);
-  console.log("allChannel title", channelTitles);
+  // console.log("allChannel title", channelTitles);
   const creatorId = currChannel.user_id;
-  console.log("type", type);
+  // console.log("type", type);
   const [title, setTitle] = useState(type == "create" ? "" : currChannel.title);
   const [description, setDescription] = useState(
     type == "create" ? "" : currChannel.description
@@ -29,8 +29,8 @@ function CreateChannelModal({ type, channelId }) {
   const [selectedMenu, setSelectedMenu] = useState(1);
   const [editTitle, setEditTitle] = useState(type == "create");
   const [editDesc, setEditDesc] = useState(type == "create");
-  console.log("channelId", channelId);
-  console.log("type", type);
+  // console.log("channelId", channelId);
+  // console.log("type", type);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newChannel = {
@@ -51,7 +51,7 @@ function CreateChannelModal({ type, channelId }) {
       data = await dispatch(createChannelThunk(newChannel, currWorkspace.id));
       closeModal();
     } else if (type === "update") {
-      console.log("update channel");
+      // console.log("update channel");
       data = await dispatch(updateChannelThunk(newChannel, channelId));
     }
     if (data) {
@@ -61,7 +61,7 @@ function CreateChannelModal({ type, channelId }) {
       setEditDesc(false);
     }
   };
-  console.log("currChannel", currChannel.title);
+  // console.log("currChannel", currChannel.title);
 
   const discardChanges = () => {
     setErrors([]);

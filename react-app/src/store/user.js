@@ -9,7 +9,7 @@ export const getAllUsersThunk = () => async (dispatch) => {
   const res = await fetch("/api/users/all");
   if (res.ok) {
     const users = await res.json();
-    console.log("users in thunk after res", users);
+    // console.log("users in thunk after res", users);
     dispatch(getAllUsersAction(users));
     return users;
   } else {
@@ -21,7 +21,7 @@ export const selectChatThunk = (key) => async (dispatch) => {
   const res = await fetch(`/api/users/selectdm/${key}`);
   if (res.ok) {
     const users = await res.json();
-    console.log("users in thunk after res", users);
+    // console.log("users in thunk after res", users);
     dispatch(getAllUsersAction(users));
     return users;
   } else {

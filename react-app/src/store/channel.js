@@ -82,7 +82,7 @@ const selectChatAction = (channels) => ({
 
 //helpers
 export const loadChannel = (channel) => async (dispatch) => {
-  console.log("channel in load channel", channel);
+  // console.log("channel in load channel", channel);
   dispatch(loadChannelAction(channel));
   return channel;
 };
@@ -93,7 +93,7 @@ export const getAllChannelsThunk = (id) => async (dispatch) => {
   const res = await fetch(`/api/channels/workspace/${id}`);
   if (res.ok) {
     const channels = await res.json();
-    console.log("channels after getting all", channels.channels);
+    // console.log("channels after getting all", channels.channels);
     dispatch(getAllChannelsAction(channels.channels));
     return channels;
   } else {
@@ -102,14 +102,14 @@ export const getAllChannelsThunk = (id) => async (dispatch) => {
 };
 
 export const getChannelMessages = (channelId) => async (dispatch) => {
-  console.log("get channel messages of ", channelId);
+  // console.log("get channel messages of ", channelId);
   const res = await fetch(`/api/channels/messages/${channelId}`);
 
   if (res.ok) {
     const messages = await res.json();
-    console.log("channels after getting all", messages);
+    // console.log("channels after getting all", messages);
     const messagesArr = messages["messages"];
-    console.log("messages", messagesArr);
+    // console.log("messages", messagesArr);
     dispatch(getChannelMessagesAction(messagesArr));
     return messagesArr;
   } else {
@@ -127,7 +127,7 @@ export const postMessageThunk = (message) => async (dispatch) => {
   if (res.ok) {
     const messages = await res.json();
     const messagesArr = messages["messages"];
-    // console.log("messages", )
+    // // console.log("messages", )
     dispatch(getChannelMessagesAction(messagesArr));
     return messagesArr;
   } else {
@@ -136,7 +136,7 @@ export const postMessageThunk = (message) => async (dispatch) => {
 };
 
 export const createChannelThunk = (channel, workspace_id) => async (dispatch) => {
-  console.log("channels thunk before res", channel);
+  // console.log("channels thunk before res", channel);
   const res = await fetch(`/api/channels/createwsgc/${workspace_id}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -145,7 +145,7 @@ export const createChannelThunk = (channel, workspace_id) => async (dispatch) =>
   if (res.ok) {
     const channels = await res.json();
     dispatch(createChannelAction(channels.channels));
-    console.log("channel.id", channel.id);
+    // console.log("channel.id", channel.id);
     return null;
   } else if (res.status < 500) {
     const data = await res.json();
@@ -166,7 +166,7 @@ export const updateChannelThunk = (channel, channelId) => async (dispatch) => {
 
   if (res.ok) {
     const update_channel = await res.json();
-    console.log("channels after res", update_channel);
+    // console.log("channels after res", update_channel);
     dispatch(updateChannelAction(update_channel));
     // return channels.channels;
   } else {
@@ -185,7 +185,7 @@ export const updateMessageThunk =
     if (res.ok) {
       const messages = await res.json();
       const messagesArr = messages["messages"];
-      // console.log("messages", )
+      // // console.log("messages", )
       dispatch(getChannelMessagesAction(messagesArr));
       return messagesArr;
     } else {
@@ -194,7 +194,7 @@ export const updateMessageThunk =
   };
 
 export const selectChatThunk = (key) => async (dispatch) => {
-  console.log("chat thunk before res", key);
+  // console.log("chat thunk before res", key);
   const res = await fetch(`/api/channels/selectdm/${key}`);
   if (res.ok) {
     const chat = await res.json();
@@ -213,7 +213,7 @@ export const deleteMessageThunk =
     if (res.ok) {
       const messages = await res.json();
       const messagesArr = messages["messages"];
-      // console.log("messages", )
+      // // console.log("messages", )
       dispatch(getChannelMessagesAction(messagesArr));
       return messagesArr;
     } else {
@@ -288,13 +288,13 @@ const channelReducer = (state = initialState, action) => {
         currChannel: { ...state.currChannel },
       };
       newState.currChannel = action.payload;
-      console.log("newState in update channel", newState);
+      // console.log("newState in update channel", newState);
       return newState;
     }
     case DELETE_CHANNEL: {
       const newState = { ...state, currChannel: {} };
       newState.currChannel = {};
-      console.log("currchanel in delete channel", newState.currChannel);
+      // console.log("currchanel in delete channel", newState.currChannel);
       return newState;
     }
     case SELECT_CHAT: {

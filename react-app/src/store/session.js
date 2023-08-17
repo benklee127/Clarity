@@ -69,7 +69,7 @@ export const logout = () => async (dispatch) => {
 
 export const signUp =
   (username, email, password, first_name, last_name) => async (dispatch) => {
-    console.log("sign up thunk");
+    // console.log("sign up thunk");
     const response = await fetch("/api/auth/signup", {
       method: "POST",
       headers: {

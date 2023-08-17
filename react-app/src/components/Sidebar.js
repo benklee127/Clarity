@@ -59,7 +59,7 @@ export default function Sidebar() {
           {allChannels.map((channel) => {
             // console.log("channel type", channel);
             if (channel.chType === "gc") {
-              console.log("map function run once for ", channel);
+              // console.log("map function run once for ", channel);
               return (<div className="create-channel-button">
                   <button
 
@@ -86,11 +86,11 @@ export default function Sidebar() {
           <div className="sidebar-channel-section">
             <div className="sidebar-section-header"><i class="fa-solid fa-caret-down"></i>&nbsp;&nbsp;Chats</div>
             {allUsers.map((user) => {
-              console.log("map function run once for ", user);
+              // console.log("map function run once for ", user);
               if (!sessionUser) return "";
               if (user.id == sessionUser.id) return "";
               let key = "";
-              console.log('target: ', user.id, 'curr when sidebarbutton', sessionUser.id);
+              // console.log('target: ', user.id, 'curr when sidebarbutton', sessionUser.id);
               if (sessionUser.id < user.id)
                 key = sessionUser.id + "_" + user.id;
               else key = user.id + "_" + sessionUser.id;

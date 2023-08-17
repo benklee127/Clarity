@@ -25,7 +25,7 @@ function SignupFormModal() {
         first_name: firstName,
         last_name: lastName,
       };
-      console.log("newUser", newUser);
+      // console.log("newUser", newUser);
 
       const data = await dispatch(
         signUp(username, email, password, firstName, lastName)
