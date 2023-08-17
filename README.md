@@ -16,9 +16,9 @@
 ![image](https://github.com/jibrahem/Snapr/assets/6230804/c85ddbd2-d468-46cc-9a94-0706dc901751)
 
 
-Python, JavaScript, Flask, React, Redux, CSS, HTML, AWS
+Python, JavaScript, Flask, React, Redux, CSS, HTML, Socket.io
 
-## Screen Shots: 
+## Pageviews: 
 ### Landing page: 
 ![image](https://github.com/benklee127/Clarity/assets/6230804/592d9727-8c0e-4017-b981-854442acd98e)
 
