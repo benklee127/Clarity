@@ -89,6 +89,7 @@ export const updateThreadReplyThunk = (replyContent, replyId) => async (dispatch
 const initalState = {
   currThread: [],
 //   currMessage: {}
+
 }
 
 const threadReducer = (state = initalState, action) => {

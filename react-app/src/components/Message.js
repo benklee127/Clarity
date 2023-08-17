@@ -19,11 +19,12 @@ export default function Message({ message ,showThread, setShowThread, threadId, 
   const channelMessages = useSelector(
     (state) => state.channels.channelMessages
   );
+  const currThread = useSelector ((state) => state.threads.currThread)
   const [showEditForm, setShowEditForm] = useState(false);
   const dispatch = useDispatch();
   // console.log("message in ", message);
 
-  useEffect(() => {}, [newContent]);
+  useEffect(() => {}, [newContent, currThread]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,6 +118,9 @@ export default function Message({ message ,showThread, setShowThread, threadId, 
             message.content
           )}
         </div>
+        {message.reply_count > 0 ? <div className='thread-count' onClick={ openThread}>{message.reply_count} {message.reply_count > 1 ? 'replies': 'reply'}
+          <div className='thread-button'>view thread</div>
+         </div> : ""}
       </div>
     </div>
   );

@@ -59,10 +59,10 @@ def sign_up():
     """
     Creates a new user and logs them in
     """
-    print('sign up routesign up routesign up routesign up routesign up routesign up route!!!!')
+    # print('sign up routesign up routesign up routesign up routesign up routesign up route!!!!')
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print('FORM DATAFORMDATAFORMDATA', form.data)
+    # print('FORM DATAFORMDATAFORMDATA', form.data)
     if form.validate_on_submit():
         user = User(
             username=form.data['username'],
