@@ -22,6 +22,7 @@ export default function Thread({ showThread, setShowThread, threadId}) {
     useEffect(()=> {
         // console.log('running get thread dispatch');
         dispatch(getMessageThread(threadId.id))
+        // setNewContent("")
     },[showThread, threadId])
 
     const closeThread = () => {
@@ -50,7 +51,7 @@ export default function Thread({ showThread, setShowThread, threadId}) {
 
             <div className="ch-header-section">
 
-                <div className='ch-title'>Thread  {threadId.id}</div>
+                <div className='ch-title'>Thread </div>
                 <div className="ch-desc">
                       {" "}
                       {"# "}
@@ -84,11 +85,11 @@ export default function Thread({ showThread, setShowThread, threadId}) {
                     <div className="form-bot-banner">
                     <div
                         className={
-                        "char-counter" + ("")
+                        "char-counter" + (newContent.length >= 500 ? "-max" : "")
                         }
                     >
                         {" "}
-                        { "/500"}
+                        { newContent.length + "/500"}
                     </div>
                     <button type="submit" onClick={postReply} className="message-form-button">
                         <div className="ch-title">

@@ -19,11 +19,12 @@ export default function Message({ message ,showThread, setShowThread, threadId, 
   const channelMessages = useSelector(
     (state) => state.channels.channelMessages
   );
+  const currThread = useSelector ((state) => state.threads.currThread)
   const [showEditForm, setShowEditForm] = useState(false);
   const dispatch = useDispatch();
   // console.log("message in ", message);
 
-  useEffect(() => {}, [newContent]);
+  useEffect(() => {}, [newContent, currThread]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
