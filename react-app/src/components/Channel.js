@@ -40,21 +40,21 @@ export default function Channel(currChannelProp) {
       dispatch(loadChannel(sessionUser.last_channel))
     }
     //open socket
-    socket = io()
-    // console.log('connected to socket');
-    //get messages
-    socket.on("chat", (message) => {
-      // console.log('chat socket triggered');
-       let res = dispatch(getChannelMessages(currChannel.id))
-       // console.log('res', res);
-   })
+  //   socket = io()
+  //   // console.log('connected to socket');
+  //   //get messages
+  //   socket.on("chat", (message) => {
+  //     // console.log('chat socket triggered');
+  //      let res = dispatch(getChannelMessages(currChannel.id))
+  //      // console.log('res', res);
+  //  })
 
-   return (()=>{
-    // console.log('socket disconnected');
-    socket.disconnect()
-   })
+  //  return (()=>{
+  //   // console.log('socket disconnected');
+  //   socket.disconnect()
+  //  })
 
-  }, [currChannel, submitContent, channelDeleted, allChannels]);
+  }, [dispatch, currChannel, submitContent, channelDeleted, allChannels]);
 
   const deleteChannel = async (e) => {
     e.preventDefault();
@@ -73,9 +73,9 @@ export default function Channel(currChannelProp) {
         channel_id: currChannel.id,
       };
       // console.log("new message", newMessage);
-      // const data = await dispatch(postMessageThunk(newMessage));
-      let data = dispatch(getChannelMessages(currChannel.id));
-      socket.emit("chat", newMessage)
+      const data = await dispatch(postMessageThunk(newMessage));
+      // let data = dispatch(getChannelMessages(currChannel.id));
+      // socket.emit("chat", newMessage)
       setContent("");
       if (data){ bottomRef.current?.scrollIntoView({ behavior: "smooth" });}
     }
