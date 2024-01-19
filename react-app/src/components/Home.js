@@ -48,7 +48,7 @@ export default function Home({ isLoaded }) {
   // if(userWorkspaces.length < 1) setShowJoinChannel(true);
 
   if (currentUser ) {
-    console.log('deployment error test message 1');
+    console.log('deployment error testt message 1');
     return (
       <div className="home-wrapper">
         <Navigation isLoaded={isLoaded} />
