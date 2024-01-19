@@ -16,9 +16,10 @@ function App() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
+  console.log('deployment error test message 2');
   return (
     <>
+      {console.log('deployment error test message 3')}
       {isLoaded && (
         <Switch>
           <Route path="/">

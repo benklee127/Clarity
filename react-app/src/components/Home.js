@@ -46,7 +46,9 @@ export default function Home({ isLoaded }) {
   };
   if (allWorkspaces.length < 1) return null;
   // if(userWorkspaces.length < 1) setShowJoinChannel(true);
+
   if (currentUser ) {
+    console.log('deployment error test message 1');
     return (
       <div className="home-wrapper">
         <Navigation isLoaded={isLoaded} />
@@ -65,6 +67,7 @@ export default function Home({ isLoaded }) {
       </div>
     );
   } else {
+    console.log('deployment error test message 4');
     return (
       <div className="dh-wrapper">
         <div className="dh-topbar">
