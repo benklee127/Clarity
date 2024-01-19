@@ -44,9 +44,13 @@ export default function Home({ isLoaded }) {
   const demoUser = () => {
     return dispatch(login("demo@aa.io", "password"));
   };
-  if (allWorkspaces.length < 1) return null;
+  if (allWorkspaces.length < 1 && isLoaded && currentUser){
+      console.log("Live check 1")
+      return null
+    };
   // if(userWorkspaces.length < 1) setShowJoinChannel(true);
   if (currentUser ) {
+    console.log("Live check 2")
     return (
       <div className="home-wrapper">
         <Navigation isLoaded={isLoaded} />
@@ -65,6 +69,7 @@ export default function Home({ isLoaded }) {
       </div>
     );
   } else {
+    console.log("Live check 3")
     return (
       <div className="dh-wrapper">
         <div className="dh-topbar">

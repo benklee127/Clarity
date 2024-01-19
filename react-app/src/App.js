@@ -16,9 +16,10 @@ function App() {
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
+  console.log("Live check 5")
   return (
     <>
+      {console.log("Live check 6")}
       {isLoaded && (
         <Switch>
           <Route path="/">

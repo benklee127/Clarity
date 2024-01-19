@@ -7,7 +7,7 @@ import "./Navigation.css";
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
   const currChannel = useSelector((state) => state.channels.currChannel);
-
+  console.log("Live check 4")
   return (
     <div className="navbar-wrapper">
       <div className="home-topbar">
